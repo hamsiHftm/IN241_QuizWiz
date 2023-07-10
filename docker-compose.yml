@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  quiz-wiz:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:80
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - quiz-wiz-network
+    depends_on:
+      - quiz-user-db
+
+  quiz-user-db:
+    image: postgres:12
+    ports:
+      - 5432:5432
+    restart: always
+    environment:
+      POSTGRES_USER: quizWiz
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: quizWiz
+    volumes:
+      - $HOME/quiz-wiz/data:/var/lib/postgresql/data
+    networks:
+      - quiz-wiz-network
+networks:
+  quiz-wiz-network:
+    driver: bridge
