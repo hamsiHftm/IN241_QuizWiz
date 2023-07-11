@@ -9,19 +9,40 @@
 class OpenTriviaAPI
 {
     private $baseURL;
-    private $session_token;
+    private $token;
 
-    public function __construct($url, $set_session_token = false)
+    public function __construct($url, $token)
     {
         $this->baseURL = $url;
-        if ($set_session_token) {
-            // TODO generate session token
-            error_log('session token for quiz created for this user');
-        }
+        $this->token = $token;
     }
 
-    public function getSessionToken() {
-        return $this->session_token;
+    public function getToken() {
+        return $this->token;
+    }
+
+    public function generateToken() {
+        $url = $this->baseURL . '/api_token.php?command=request';
+        $response = file_get_contents($url);
+
+        $data = json_decode($response, true);
+        if ($data and $data['response_code'] == 0) {
+            $this->token = $data['token'];
+            return $this->token;
+        }
+        return null;
+    }
+
+    public function resetToken() {
+        $url = $this->baseURL . '/api_token.php?command=reset&token=' . $this->token;
+        $response = file_get_contents($url);
+
+        $data = json_decode($response, true);
+        if ($data and $data['response_code'] == 0) {
+            $this->token = $data['token'];
+            return $this->token;
+        }
+        return null;
     }
 
     public function getCategories() {
@@ -39,8 +60,18 @@ class OpenTriviaAPI
     }
 
 
-    public function getQuestions() {
-        $url = $this->baseURL . 'api.php';
+    public function getQuestions($amount, $type, $categoryId, $difficulty) {
+        $url = $this->baseURL . 'api.php?amount=' . $amount . '&category=' . $categoryId . '&difficulty=' . $difficulty . '&type=' . $type;
+
+        // Make a GET request to the API endpoint and retrieve the response
+        $response = file_get_contents($url);
+
+        // Process the response (e.g., JSON decoding, error handling, etc.)
+        $data = json_decode($response, true);
+
+        if ($data) {
+            return $data['results'];
+        }
         return [];
     }
 }

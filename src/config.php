@@ -6,4 +6,7 @@ $GLOBALS['DB_USERNAME'] = "quizWiz";
 $GLOBALS['DB_PASSWORD'] = "12345";
 
 $GLOBALS['API_BASE_URL'] = "https://opentdb.com";
-?>
+
+$GLOBALS['NR_OF_QUESTIONS'] = 10;
+$GLOBALS['QUESTION_TYPE'] = 'multiple';
+
