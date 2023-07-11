@@ -15,10 +15,10 @@ CREATE TABLE IF NOT EXISTS Category (
   name VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Game (
+CREATE TABLE IF NOT EXISTS Quiz (
   id SERIAL PRIMARY KEY,
   player_id INT REFERENCES Player(id),
-  mode VARCHAR(10) CHECK (mode IN ('easy', 'medium', 'hard')),
+  difficulty VARCHAR(10) CHECK (difficulty IN ('EASY', 'MEDIUM', 'HARD', 'MIXED')),
   category_id INT REFERENCES Category(id),
   total_score INT NOT NULL
 );

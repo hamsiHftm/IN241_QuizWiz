@@ -2,13 +2,11 @@
 
 class Question
 {
-    private $category;
     private $questionText;
-    private $answers = array();
+    private $options = array();
 
-    public function __construct($category, $text)
+    public function __construct($text)
     {
-        $this->category = $category;
         $this->questionText = $text;
     }
 
@@ -17,7 +15,7 @@ class Question
     }
 
     public function addAnswer($answer) {
-        $this->answers[] = $answer;
+        $this->options[] = $answer;
     }
 
 }
