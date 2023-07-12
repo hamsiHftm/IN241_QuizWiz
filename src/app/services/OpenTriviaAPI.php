@@ -6,11 +6,17 @@
  * Includes methods to retrieve and interact with data from OpenTrivia
  * 1. getCategories --> get all the quiz topic
  */
+
+include __DIR__ . '/../models/Quiz.php';
+include __DIR__ . '/../models/Question.php';
+include __DIR__ . '/../models/Answer.php';
+
 class OpenTriviaAPI
 {
     private $baseURL;
     private $token;
 
+    # TODO token
     public function __construct($url, $token)
     {
         $this->baseURL = $url;
@@ -59,19 +65,65 @@ class OpenTriviaAPI
         return [];
     }
 
+    public function getQuestions($amount, $category, $difficulty) {
+        $url = $this->baseURL . '/api.php';
+        $params = array(
+            'amount' => $amount,
+            'category' => $category->getId()
+        );
 
-    public function getQuestions($amount, $type, $categoryId, $difficulty) {
-        $url = $this->baseURL . 'api.php?amount=' . $amount . '&category=' . $categoryId . '&difficulty=' . $difficulty . '&type=' . $type;
+        if (!empty($this->token)) {
+            $params['token'] = $this->token;
+        }
+        if ($difficulty !== Difficulty::MIXED->value) {
+            $params['difficulty'] = $difficulty;
+        }
+
+        // Build the query string
+        $queryString = http_build_query($params);
+        // Append the query string to the URL
+        $urlWithParams = $url . '?' . $queryString;
 
         // Make a GET request to the API endpoint and retrieve the response
-        $response = file_get_contents($url);
-
+        $response = file_get_contents($urlWithParams);
         // Process the response (e.g., JSON decoding, error handling, etc.)
         $data = json_decode($response, true);
-
+        $quiz = null;
         if ($data) {
-            return $data['results'];
+            $response_code = $data['response_code'];
+            switch ($response_code) {
+                case 0:
+                    $quiz = $this->extract_quiz_from_response($category, $difficulty, $data['results']);
+                    break;
+                case 1:
+                    # TODO return notification to change the difficult to other or chose mixed, otherwis change the category, because not enough question available
+                    break;
+                case 3:
+                    # TODO create new token and save to the user and request again the question
+                    break;
+                case 4:
+                    # TODO regenerate Token, because all question are called. So ressetting token is necessary
+                    break;
+                default:
+                    # TODO Notfictation something went wrong notification
+                    break;
+            }
+
         }
-        return [];
+        return $quiz;
+    }
+
+    private function extract_quiz_from_response($category, $difficulty, $results) {
+        $quiz = new Quiz($category, $difficulty);
+        foreach ($results as $result) {
+            $question = new Question($result['question']);
+            $question->addOption(new Answer($result['correct_answer'], true));
+
+            foreach ($result['incorrect_answers'] as $incorrect_answer) {
+                $question->addOption(new Answer($incorrect_answer, false));
+            }
+            $quiz->addQuestion($question);
+        }
+        return $quiz;
     }
 }

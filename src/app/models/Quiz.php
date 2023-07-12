@@ -3,7 +3,7 @@
 class Quiz
 {
     private $category;
-    private $questions = array();
+    private $questions;
     private $difficulty;
 
     private $currentPoints;
@@ -13,6 +13,7 @@ class Quiz
         $this->category = $category;
         $this->difficulty = $difficulty;
         $this->currentPoints = 0;
+        $this->questions = array();
     }
 
     public function getCategory()
@@ -25,12 +26,18 @@ class Quiz
         return $this->difficulty;
     }
 
-    public function getCurrentPoints()
+    public function getCurrentPoints(): int
     {
         return $this->currentPoints;
     }
 
-    public function addQuestion($question) {
+    public function getQuestions(): array
+    {
+        return $this->questions;
+    }
+
+    public function addQuestion($question): void
+    {
         $this->questions[] = $question;
     }
 

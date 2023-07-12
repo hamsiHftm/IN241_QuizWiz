@@ -1,9 +1,9 @@
 <?php
 
-enum Difficulty
+enum Difficulty: string
 {
-    case EASY;
-    case MEDIUM;
-    case HARD;
-    case MIXED;
+    case EASY = 'easy';
+    case MEDIUM = 'medium';
+    case HARD = 'hard';
+    case MIXED = 'mixed';
 }
