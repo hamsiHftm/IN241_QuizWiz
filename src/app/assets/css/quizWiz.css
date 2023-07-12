@@ -1,0 +1,27 @@
+:root {
+    --quiz-wiz-dark-blue: #002244;
+    --white: #ffffff;
+    --grey: #4D4D4D;
+    --quiz-wiz-red: #DC143C;
+}
+
+html,body {
+    height: 100%;
+    margin: 0;
+}
+
+.landing-page-container {
+    height: 100%
+}
+
+.blue-background-container {
+    background: var(--quiz-wiz-dark-blue);
+    color: var(--white);
+}
+
+.quiz-wiz-red-button{
+    background: var(--quiz-wiz-red);
+    padding: 10px 50px;
+    border: 0;
+    color: white;
+}
