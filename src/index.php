@@ -1,7 +1,7 @@
 <?php
 include 'config.php';
-require_once 'app/classes/QuizWizDB.php';
-require_once 'app/classes/OpenTriviaAPI.php';
+require_once 'app/services/QuizWizDB.php';
+require_once 'app/services/OpenTriviaAPI.php';
 
 // Database connection parameters
 $host = $GLOBALS['DB_HOST'];
