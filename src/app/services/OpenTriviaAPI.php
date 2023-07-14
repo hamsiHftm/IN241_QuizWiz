@@ -65,18 +65,22 @@ class OpenTriviaAPI
         return [];
     }
 
-    public function getQuestions($amount, $category, $difficulty) {
+    public function getQuestions($amount, $category, $difficulty, $questionType) {
         $url = $this->baseURL . '/api.php';
         $params = array(
             'amount' => $amount,
-            'category' => $category->getId()
+            'category' => $category
         );
 
         if (!empty($this->token)) {
             $params['token'] = $this->token;
         }
-        if ($difficulty !== Difficulty::MIXED->value) {
+        if ($difficulty !== Difficulty::Mixed->value) {
             $params['difficulty'] = $difficulty;
+        }
+
+        if ($questionType !== QuestionType::Mixed->value) {
+            $params['type'] = $questionType;
         }
 
         // Build the query string
@@ -93,7 +97,7 @@ class OpenTriviaAPI
             $response_code = $data['response_code'];
             switch ($response_code) {
                 case 0:
-                    $quiz = $this->extract_quiz_from_response($category, $difficulty, $data['results']);
+                    $quiz = $this->extract_quiz_from_response($category, $difficulty, $questionType, $data['results']);
                     break;
                 case 1:
                     # TODO return notification to change the difficult to other or chose mixed, otherwis change the category, because not enough question available
@@ -113,8 +117,8 @@ class OpenTriviaAPI
         return $quiz;
     }
 
-    private function extract_quiz_from_response($category, $difficulty, $results) {
-        $quiz = new Quiz($category, $difficulty);
+    private function extract_quiz_from_response($category, $difficulty, $questionType, $results) {
+        $quiz = new Quiz($category, $difficulty, $questionType);
         foreach ($results as $result) {
             $question = new Question($result['question']);
             $question->addOption(new Answer($result['correct_answer'], true));

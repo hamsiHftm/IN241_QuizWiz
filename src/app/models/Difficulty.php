@@ -2,8 +2,18 @@
 
 enum Difficulty: string
 {
-    case EASY = 'easy';
-    case MEDIUM = 'medium';
-    case HARD = 'hard';
-    case MIXED = 'mixed';
+    case Easy = 'easy';
+    case Medium = 'medium';
+    case Hard = 'hard';
+    case Mixed = 'mixed';
+
+    public static function values(): array
+    {
+        return [
+            self::Easy,
+            self::Medium,
+            self::Hard,
+            self::Mixed
+        ];
+    }
 }

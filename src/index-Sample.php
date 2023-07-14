@@ -43,7 +43,7 @@ if ($showLandingPage) {
     $triviaAPI = new OpenTriviaAPI($api_base_url, null);
     $category_list = $triviaAPI->getCategories();
 
-    $quiz = $triviaAPI->getQuestions(10, new Category(24, "Politics"), Difficulty::EASY->value);
+    $quiz = $triviaAPI->getQuestions(10, new Category(24, "Politics"), Difficulty::Easy->value);
     foreach ($quiz->getQuestions() as $question) {
         echo "jeei";
         echo $question->getQuestionText();
