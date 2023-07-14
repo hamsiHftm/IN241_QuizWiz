@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500&family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
 </head>
 <body>
-    <?php include '../app/templates/header.php'; ?>
+    <?php include '../app/components/header.php'; ?>
     <div class="container-sm">
         <div class="qw-content">
             <div>
@@ -66,6 +66,6 @@
             </div>
         </div>
     </div>
-    <?php include '../app/templates/footer.php'; ?>
+    <?php include '../app/components/footer.php'; ?>
 </body>
 </html>
