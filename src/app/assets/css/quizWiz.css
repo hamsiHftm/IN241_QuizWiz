@@ -53,8 +53,8 @@ a:link, a:visited, a:hover, a:active{
     box-shadow: 0 0 0 0.25rem rgba(220, 20, 60, 0.25);
 }
 
-.qw-header {
-    padding: 10px 15px;
+.qw-header, .qw-footer {
+    padding: 25px 50px;
     color: var(--qw-white) !important;
 }
 
@@ -79,4 +79,17 @@ TODO --> Window size change CSS
 
 .landing-page-logo {
     width: 60%;
+}
+
+/***************************************
+ Header & Footer style
+****************************************/
+
+.header-link, .footer-link{
+    color: var(--qw-white);
+    padding: 0px 25px;
+}
+
+.header-link:hover, .footer-link:hover{
+    color: var(--qw-red);
 }

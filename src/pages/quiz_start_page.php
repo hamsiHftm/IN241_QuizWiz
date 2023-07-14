@@ -80,6 +80,7 @@ $triviaAPI = new OpenTriviaAPI($api_base_url, null); # TODO make instanz Varaibl
         </form>
         </div>
     </div>
+    <?php include '../app/templates/footer.php'; ?>
 </body>
 </html>
 <?php

@@ -28,11 +28,7 @@
                     <p>
                         "Unleash your inner quiz champion and embark on an exhilarating journey of knowledge. Join Quiz Wiz today and let your curiosity guide you to new horizons through the excitement of quizzing!"
                     </p>
-                    <form action="pages/quiz_start_page.php" method="get">
-                        <button type="submit" class="qw-red-button">
-                            Get Started!
-                        </button>
-                    </form>
+                    <a class="qw-red-button" href="pages/home_page.php">Get Started!</a>
                 </div>
             </div>
         </div>
