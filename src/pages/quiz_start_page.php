@@ -24,7 +24,9 @@ $triviaAPI = new OpenTriviaAPI($api_base_url, null); # TODO make instanz Varaibl
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500&family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
 </head>
 <body>
+    <?php include '../app/templates/header.php'; ?>
     <div class="container-sm">
+        <div class="qw-content">
         <h1>Create Quiz</h1>
         <br/>
         <form method="POST">
@@ -76,6 +78,7 @@ $triviaAPI = new OpenTriviaAPI($api_base_url, null); # TODO make instanz Varaibl
             <br>
             <input type="submit" name="submit" value="Start" class="qw-red-button">
         </form>
+        </div>
     </div>
 </body>
 </html>
