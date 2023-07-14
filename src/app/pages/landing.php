@@ -2,7 +2,7 @@
     <div class="row landing-page-container">
         <div class="col-5">
             <div class="landing-page-container d-flex align-items-center justify-content-center">
-                <img class="landing-page-logo" src="quiz-wiz-logo-with-slogan.jpg">
+                <img class="landing-page-logo" src="../assets/img/quiz-wiz-logo-with-slogan.jpg">
             </div>
         </div>
         <div class="col-7 qw-blue-container">
