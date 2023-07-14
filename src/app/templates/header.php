@@ -6,7 +6,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/pages/home.php">
             <img src="<?php echo $_SERVER['DOCUMENT_ROOT'] . '/app/assets/img/quiz_wiz_logo.svg'; ?>" alt="QuizWiz"/>
         </a>
 
