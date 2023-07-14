@@ -15,65 +15,28 @@
 </head>
 <body>
 
-
-<?php
-include 'config.php';
-
-$showLandingPage = $GLOBALS['SHOW_LANDING_PAGE'];
-if ($showLandingPage) {
-    include 'app/pages/landing.php';
-} else {
-    include 'app/models/Category.php';
-    include 'app/models/Difficulty.php';
-    require_once 'app/services/QuizWizDB.php';
-    require_once 'app/services/OpenTriviaAPI.php';
-
-    // Database connection parameters
-    $host = $GLOBALS['DB_HOST'];
-    $port = $GLOBALS['DB_PORT'];
-    $dbname = $GLOBALS['DB_NAME'];
-    $user = $GLOBALS['DB_USERNAME'];
-    $password = $GLOBALS['DB_PASSWORD'];
-
-    $api_base_url = $GLOBALS['API_BASE_URL'];
-
-    $database = new QuizWizDB($host, $port, $dbname, $user, $password);
-    $pdo = $database->getConnection();
-
-    $triviaAPI = new OpenTriviaAPI($api_base_url, null);
-    $category_list = $triviaAPI->getCategories();
-
-    $quiz = $triviaAPI->getQuestions(10, new Category(24, "Politics"), Difficulty::EASY->value);
-    foreach ($quiz->getQuestions() as $question) {
-        echo "jeei";
-        echo $question->getQuestionText();
-    }
-
-    //
-    //// Retrieve data from the "user" table
-    //try {
-    //    $stmt = $pdo->query("SELECT * FROM \"player\"");
-    //    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    //} catch (PDOException $e) {
-    //    die("Error retrieving data from table: " . $e->getMessage());
-    //}
-    //
-    //// Display the data
-    //echo "<h1>User List</h1>";
-    //echo "<table>";
-    //echo "<tr><th>Name</th><th>Last Name</th></tr>";
-    //
-    //foreach ($users as $user) {
-    //    echo "<tr>";
-    //    echo "<td>" . $user['name'] . "</td>";
-    //    echo "<td>" . $user['last_name'] . "</td>";
-    //    echo "</tr>";
-    //}
-    //
-    //echo "</table>";
-}
-
-
-?>
+<div class="container-fluid landing-page-container">
+    <div class="row landing-page-container">
+        <div class="col-5">
+            <div class="landing-page-container d-flex align-items-center justify-content-center">
+                <img class="landing-page-logo" src="app/assets/img/quiz-wiz-logo-with-slogan.jpg">
+            </div>
+        </div>
+        <div class="col-7 qw-blue-container">
+            <div class="landing-page-container d-flex align-items-center justify-content-center">
+                <div class="inner-container align-items-center justify-content-center">
+                    <p>
+                        "Unleash your inner quiz champion and embark on an exhilarating journey of knowledge. Join Quiz Wiz today and let your curiosity guide you to new horizons through the excitement of quizzing!"
+                    </p>
+                    <form action="pages/quiz_start_page.php" method="get">
+                        <button type="submit" class="qw-red-button">
+                            Get Started!
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
