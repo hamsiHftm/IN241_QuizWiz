@@ -53,6 +53,22 @@ a:link, a:visited, a:hover, a:active{
     color: var(--qw-red);
 }
 
+.qw-loader-container {
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    position: absolute;
+    top:0;
+    left: 0;
+    background: rgba(245, 245, 245, 0.25);
+}
+
+.qw-spinner {
+    height: 5vh;
+    width: 5vh;
+    color: var(--qw-red);
+}
+
 .qw-label {
     padding: 10px 0;
     color: var(--qw-grey);

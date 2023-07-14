@@ -25,6 +25,7 @@ $triviaAPI = new OpenTriviaAPI($api_base_url, null); # TODO make instanz Varaibl
 </head>
 <body>
     <?php include '../app/components/header.php'; ?>
+
     <div class="container-sm">
         <div class="qw-content">
         <h1>Create Quiz</h1>
@@ -86,7 +87,9 @@ $triviaAPI = new OpenTriviaAPI($api_base_url, null); # TODO make instanz Varaibl
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submit'])) {
-        # TODO loader
+        // TODO Show the loader
+        include '../app/components/loader.php';
+
         $selectedCategory = $_POST['categorySel'];
         $selectedDifficulty = $_POST['difficulty'];
         $selectedType = $_POST['type'];
@@ -95,8 +98,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($quiz) {
             error_log((string)$quiz->getQuestions());
         }
+        sleep(5);
 
         // Perform further processing or redirect as needed
+        echo "<script>document.getElementById('loader').remove();</script>";
+        exit;
     }
 }
 
