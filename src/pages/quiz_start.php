@@ -93,10 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $quiz = $triviaAPI->getQuestions($GLOBALS['NR_OF_QUESTIONS'], $selectedCategory, $selectedDifficulty, $selectedType);
         if ($quiz) {
-            foreach ($quiz->getQuestions() as $question) {
-                echo '<div>'.$question->getQuestionText(). '</div>';
-                echo '<br/>';
-            }
+            error_log((string)$quiz->getQuestions());
         }
 
         // Perform further processing or redirect as needed

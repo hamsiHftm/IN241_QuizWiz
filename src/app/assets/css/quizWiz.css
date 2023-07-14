@@ -5,6 +5,7 @@
     --qw-red: #DC143C;
 }
 
+
 html,body,button {
     height: 100%;
     margin: 0;
@@ -72,6 +73,12 @@ a:link, a:visited, a:hover, a:active{
 .qw-header, .qw-footer {
     padding: 25px 50px;
     color: var(--qw-white) !important;
+}
+
+.qw-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .qw-content {
