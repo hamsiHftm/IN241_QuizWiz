@@ -13,6 +13,22 @@ html,body,button {
     letter-spacing: .1rem;
 }
 
+h1 {
+    padding: 15px 0;
+}
+
+strong {
+    color: var(--qw-red);
+}
+
+a {
+    color: var(--qw-red);
+}
+
+a:hover {
+    color: var(--qw-dark-blue);
+}
+
 a:link, a:visited, a:hover, a:active{
     text-decoration: none;
 }
@@ -59,7 +75,7 @@ a:link, a:visited, a:hover, a:active{
 }
 
 .qw-content {
-    padding: 2vh 2vw;
+    padding: 5vh 2vw;
 }
 
 /***************************************
@@ -91,5 +107,17 @@ TODO --> Window size change CSS
 }
 
 .header-link:hover, .footer-link:hover{
+    color: var(--qw-red);
+}
+
+/***************************************
+ Impressum & About Us style
+****************************************/
+.qw-section {
+    padding: 15px 0;
+}
+
+.qw-section > h2 {
+    font-size: 1.25rem;
     color: var(--qw-red);
 }

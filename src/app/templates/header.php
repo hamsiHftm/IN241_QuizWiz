@@ -15,13 +15,13 @@
                 <?php
                     if ($GLOBALS['IS_USER_LOGGED']) {
                         echo '<li class="nav-item active">
-                    <a class="header-link" href="/pages/quiz_start_page.php">Quiz</a>
+                    <a class="header-link" href="/pages/quiz_start.php">Quiz</a>
                 </li>';
                     }
                 ?>
 
                 <li class="nav-item">
-                    <a class="header-link" href="#">About us</a>
+                    <a class="header-link" href="/pages/about_us.php">About us</a>
                 </li>
 
                 <?php

@@ -27,7 +27,7 @@
 
                 <?php
                 if ($GLOBALS['IS_USER_LOGGED']) {
-                    echo '<a class="qw-red-button" href="quiz_start_page.php">Take Quiz!</a>';
+                    echo '<a class="qw-red-button" href="quiz_start.php">Take Quiz!</a>';
                 }
                 ?>
             </div>
