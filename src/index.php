@@ -8,18 +8,21 @@
     <script src="app/assets/bootstrap/js/bootstrap.js"></script>
     <!-- Custom stylesheet -->
     <link rel="stylesheet" href="app/assets/css/quizWiz.css">
+    <!-- added google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500&family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
 </head>
 <body>
 
 
 <?php
+include 'config.php';
 
-$showLandingPage = true;
+$showLandingPage = $GLOBALS['SHOW_LANDING_PAGE'];
 if ($showLandingPage) {
     include 'app/pages/landing.php';
 } else {
-
-    include 'config.php';
     include 'app/models/Category.php';
     include 'app/models/Difficulty.php';
     require_once 'app/services/QuizWizDB.php';

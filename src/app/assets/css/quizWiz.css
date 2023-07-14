@@ -1,27 +1,51 @@
 :root {
-    --quiz-wiz-dark-blue: #002244;
-    --white: #ffffff;
-    --grey: #4D4D4D;
-    --quiz-wiz-red: #DC143C;
+    --qw-dark-blue: #002244;
+    --qw-white: #ffffff;
+    --qw-grey: #4D4D4D;
+    --qw-red: #DC143C;
 }
 
-html,body {
+html,body,button {
     height: 100%;
     margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: .1rem;
 }
 
+.qw-blue-container {
+    background: var(--qw-dark-blue);
+    color: var(--qw-white);
+}
+
+.qw-red-button{
+    background: var(--qw-red);
+    padding: 10px 50px;
+    border: 2px solid var(--qw-red);
+    color: white;
+}
+
+.qw-red-button:hover {
+    background: var(--qw-white);
+    padding: 10px 50px;
+    border: 2px solid var(--qw-red);
+    color: var(--qw-red);
+}
+
+/***************************************
+ Landing Page Style
+****************************************/
+/*
+TODO --> Window size change CSS
+ */
 .landing-page-container {
     height: 100%
 }
 
-.blue-background-container {
-    background: var(--quiz-wiz-dark-blue);
-    color: var(--white);
+.inner-container {
+    width:70%;
+    font-size: 2em;
 }
 
-.quiz-wiz-red-button{
-    background: var(--quiz-wiz-red);
-    padding: 10px 50px;
-    border: 0;
-    color: white;
+.landing-page-logo {
+    width: 60%;
 }

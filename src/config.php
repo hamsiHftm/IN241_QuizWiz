@@ -10,3 +10,5 @@ $GLOBALS['API_BASE_URL'] = "https://opentdb.com";
 $GLOBALS['NR_OF_QUESTIONS'] = 10;
 $GLOBALS['QUESTION_TYPE'] = 'multiple';
 
+$GLOBALS['SHOW_LANDING_PAGE'] = true;
+
