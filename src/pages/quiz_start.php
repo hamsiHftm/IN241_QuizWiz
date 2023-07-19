@@ -1,4 +1,5 @@
 <?php
+    session_start(); // Add this line to enable session usage
     include '../config.php';
     require_once '../app/models/Difficulty.php';
     require_once '../app/models/QuestionType.php';
@@ -6,6 +7,23 @@
 
 $api_base_url = $GLOBALS['API_BASE_URL'];
 $triviaAPI = new OpenTriviaAPI($api_base_url, null); # TODO make instanz Varaible
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['submit'])) {
+        $selectedCategory = $_POST['categorySel'];
+        $selectedDifficulty = $_POST['difficulty'];
+        $selectedType = $_POST['type'];
+
+        $quiz = $triviaAPI->getQuestions($GLOBALS['NR_OF_QUESTIONS'], $selectedCategory, $selectedDifficulty, $selectedType);
+        if ($quiz) {
+            $_SESSION['quiz'] = $quiz;
+            header("Location: quiz_question.php?nr=1");
+        }
+        exit;
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -34,8 +52,13 @@ $triviaAPI = new OpenTriviaAPI($api_base_url, null); # TODO make instanz Varaibl
             <div class="mb-3">
                 <div class="qw-label">Category</div>
             <?php
-            $categories = $triviaAPI->getCategories(); // Assuming $api is an instance of the OpenTriviaAPI class
-
+            $categories = null;
+            if (isset($_SESSION['categories'])) {
+                $categories = $_SESSION['categories'];
+            } else {
+                $categories = $triviaAPI->getCategories();
+                $_SESSION['categories'] = $categories;
+            }
             if (!empty($categories)) {
                 ?>
                 <select name="categorySel" id="categorySel" class="form-select qw-form-select">
@@ -84,25 +107,3 @@ $triviaAPI = new OpenTriviaAPI($api_base_url, null); # TODO make instanz Varaibl
     <?php include '../app/components/footer.php'; ?>
 </body>
 </html>
-<?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['submit'])) {
-        // TODO Show the loader
-        include '../app/components/loader.php';
-
-        $selectedCategory = $_POST['categorySel'];
-        $selectedDifficulty = $_POST['difficulty'];
-        $selectedType = $_POST['type'];
-
-        $quiz = $triviaAPI->getQuestions($GLOBALS['NR_OF_QUESTIONS'], $selectedCategory, $selectedDifficulty, $selectedType);
-        if ($quiz) {
-            error_log((string)$quiz->getQuestions());
-        }
-        sleep(5);
-
-        // Perform further processing or redirect as needed
-        echo "<script>document.getElementById('loader').remove();</script>";
-        exit;
-    }
-}
-

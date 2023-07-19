@@ -3,27 +3,27 @@
 class Question
 {
     private $questionText;
-    private $options;
+    private $answers = array();
 
     public function __construct($text)
     {
         $this->questionText = $text;
-        $this->options = array();
+        $this->answers = array();
     }
 
     public function getQuestionText() {
         return $this->questionText;
     }
 
-    public function addOption($option): void
+    public function addAnswer($option): void
     {
-        $this->options[] = $option;
+        $this->answers[] = $option;
     }
 
-    public function getOptions(): array
+    public function getAnswers(): array
     {
-        shuffle($this->options);
-        return $this->options;
+        shuffle($this->answers);
+        return $this->answers;
     }
 
 }

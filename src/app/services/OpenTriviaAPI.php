@@ -121,10 +121,10 @@ class OpenTriviaAPI
         $quiz = new Quiz($category, $difficulty, $questionType);
         foreach ($results as $result) {
             $question = new Question($result['question']);
-            $question->addOption(new Answer($result['correct_answer'], true));
+            $question->addAnswer(new Answer($result['correct_answer'], true));
 
             foreach ($result['incorrect_answers'] as $incorrect_answer) {
-                $question->addOption(new Answer($incorrect_answer, false));
+                $question->addAnswer(new Answer($incorrect_answer, false));
             }
             $quiz->addQuestion($question);
         }
