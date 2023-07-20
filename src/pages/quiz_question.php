@@ -44,16 +44,26 @@ if ($questionNr == 10) {
 </head>
 <body>
     <div class="container">
-        <div class="qw-question">
-            <?php echo $currentQuestion->getQuestionText() ?>
-        </div>
-        <div class="qw-options-container">
-            <?php
+        <div class="qw-question-container">
+            <div class="progress">
+                <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <div class="qw-question">
+                <?php echo $currentQuestion->getQuestionText() ?>
+            </div>
+            <div class="container qw-options-container">
+                <div class="row row-cols-2">
+                <?php
                 foreach ($currentQuestion->getAnswers() as $answer) {
-                    echo '<div class="qw-option">' . $answer.getAnswerText() . '</div>';
+                    echo '<div class="qw-option">' . $answer->getAnswerText() . '</div>';
                 }
-            ?>
+                ?>
+                </div>
+            </div>
+            <button class="qw-red-button">Submit</button>
         </div>
+
     </div>
 </body>
 </html>
