@@ -20,6 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500&family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- TODO rethink about the components to use in the header, because image is not loading properly -->
     <?php include '../app/components/header.php'; ?>
     <div class="container-sm">
         <div class="qw-content">

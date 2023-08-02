@@ -27,11 +27,11 @@
                 <?php
                 if (!$GLOBALS['IS_USER_LOGGED']) {
                     echo '<li class="nav-item active">
-                    <a class="header-link" href="#">Register</a>
+                    <a class="header-link" href="/pages/register.php">Register</a>
                 </li>';
 
                     echo '<li class="nav-item active">
-                    <a class="header-link" href="#">Login</a>
+                    <a class="header-link" href="/pages/login.php">Login</a>
                 </li>';
                 }
                 ?>

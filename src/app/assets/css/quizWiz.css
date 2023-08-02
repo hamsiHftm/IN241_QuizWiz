@@ -3,6 +3,9 @@
     --qw-white: #ffffff;
     --qw-grey: #4D4D4D;
     --qw-red: #DC143C;
+    --qw-pastal-yellow: #F2EAC4;
+    --qw-pastal-red: #FAA8A8;
+    --qw-pastal-green: #9AE3B7;
 }
 
 
@@ -102,8 +105,7 @@ a:link, a:visited, a:hover, a:active{
 }
 
 .qw-question-container {
-    height: 70%;
-    width: 60%;
+    width: 100%;
 }
 
 .qw-question {
@@ -115,17 +117,40 @@ a:link, a:visited, a:hover, a:active{
 }
 
 .qw-options-container {
-
+    padding: 5vh 0;
 }
 
 .qw-option {
+    background: none;
     padding: 20px 0;
     text-align: center;
     border: 1px var(--qw-grey) solid;
-    width: 40%;
-    margin: 0.75% 5%;
+    width: 45%;
+    margin-top: 0.75%;
+    margin-bottom: 0.75%;
     border-radius: 5px;
     box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+/* Apply margin-right: 2.5% to the 1st and 3rd elements */
+.qw-options-container .row .qw-option:nth-child(2n+1) {
+    margin-right: 2.5%;
+}
+
+/* Apply margin-left: 2.5% to the 2nd and 4th elements */
+.qw-options-container .row .qw-option:nth-child(2n) {
+    margin-left: 2.5%;
+}
+
+.qw-option:hover, .qw-option.selected,
+.qw-option:active  {
+    border-color: var(--qw-pastal-yellow);
+    background: var(--qw-pastal-yellow);
+}
+
+.qw-progress-container {
+    padding: 20px 0;
+    margin-bottom: 5vh;
 }
 
 /***************************************
@@ -170,4 +195,52 @@ TODO --> Window size change CSS
 .qw-section > h2 {
     font-size: 1.25rem;
     color: var(--qw-red);
+}
+
+/***************************************
+ Login & Register style
+****************************************/
+
+.qw-card-layout {
+    height: 100%;
+    width: 100%;
+}
+
+.qw-card-container {
+    height: 70%;
+    width: 70%;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.qw-card-inner-layout {
+    padding: 4em;
+    width: 100%;
+    height: 100%;
+}
+
+.qw-card-inner-layout.div {
+    width: 100%;
+}
+
+.qw-card-icon-layout {
+    height: 10em;
+}
+
+
+/***************************************
+ Login & Register form
+****************************************/
+
+.qw-form {
+    padding: 2em;
+}
+
+.qw-form > div{
+    padding: 10px 0;
+    width: 100%;
+}
+
+.qw-form > div > button{
+    padding: 10px 0;
+    width: 100%;
 }
