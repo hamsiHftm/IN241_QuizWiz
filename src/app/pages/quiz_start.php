@@ -1,9 +1,9 @@
 <?php
     session_start(); // Add this line to enable session usage
-    include '../config.php';
-    require_once '../app/models/Difficulty.php';
-    require_once '../app/models/QuestionType.php';
-    require_once '../app/services/OpenTriviaAPI.php';
+    include '../../config.php';
+    require_once '../models/Difficulty.php';
+    require_once '../models/QuestionType.php';
+    require_once '../services/OpenTriviaAPI.php';
 
 $api_base_url = $GLOBALS['API_BASE_URL'];
 $triviaAPI = new OpenTriviaAPI($api_base_url, null); # TODO make instanz Varaible
@@ -30,19 +30,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>QuizWiz</title>
-    <link rel="icon" href="../app/assets/img/logo_icon.svg">
+    <link rel="icon" href="../../assets/img/logo_icon.svg">
     <!-- Adding bootstrap library -->
-    <link rel="stylesheet" href="../app/assets/bootstrap/css/bootstrap.css">
-    <script src="../app/assets/bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.css">
+    <script src="../../assets/bootstrap/js/bootstrap.js"></script>
     <!-- Custom stylesheet -->
-    <link rel="stylesheet" href="../app/assets/css/quizWiz.css">
+    <link rel="stylesheet" href="../../assets/css/quizWiz.css">
     <!-- added google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500&family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
 </head>
 <body>
-    <?php include '../app/components/header.php'; ?>
+    <?php include '../components/header.php'; ?>
 
     <div class="container-sm">
         <div class="qw-content">
@@ -104,6 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
         </div>
     </div>
-    <?php include '../app/components/footer.php'; ?>
+    <?php include '../components/footer.php'; ?>
 </body>
 </html>

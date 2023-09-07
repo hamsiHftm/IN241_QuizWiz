@@ -1,7 +1,7 @@
 <?php
-require_once '../app/models/Quiz.php';
-require_once '../app/models/Answer.php';
-require_once '../app/models/Question.php';
+require_once '../models/Quiz.php';
+require_once '../models/Answer.php';
+require_once '../models/Question.php';
 session_start();
 
 // Get the value of param1 from the query parameter
@@ -46,12 +46,12 @@ if (isset($_POST['evaluate_question'])) {
 <html>
 <head>
     <title>QuizWiz</title>
-    <link rel="icon" href="../app/assets/img/logo_icon.svg">
+    <link rel="icon" href="../../assets/img/logo_icon.svg">
     <!-- Adding bootstrap library -->
-    <link rel="stylesheet" href="../app/assets/bootstrap/css/bootstrap.css">
-    <script src="../app/assets/bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.css">
+    <script src="../../assets/bootstrap/js/bootstrap.js"></script>
     <!-- Custom stylesheet -->
-    <link rel="stylesheet" href="../app/assets/css/quizWiz.css">
+    <link rel="stylesheet" href="../../assets/css/quizWiz.css">
     <!-- added google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

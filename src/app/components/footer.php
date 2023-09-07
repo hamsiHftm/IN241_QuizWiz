@@ -4,7 +4,7 @@
         </div>
 
         <div>
-            <a class="footer-link" href="/pages/impressum.php">Impressum</a>
+            <a class="footer-link" href="../pages/impressum.php">Impressum</a>
         </div>
     </footer>
 

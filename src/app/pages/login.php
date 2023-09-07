@@ -5,12 +5,12 @@
 <html>
 <head>
     <title>QuizWiz</title>
-    <link rel="icon" href="../app/assets/img/logo_icon.svg">
+    <link rel="icon" href="../../assets/img/logo_icon.svg">
     <!-- Adding bootstrap library -->
-    <link rel="stylesheet" href="../app/assets/bootstrap/css/bootstrap.css">
-    <script src="../app/assets/bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.css">
+    <script src="../../assets/bootstrap/js/bootstrap.js"></script>
     <!-- Custom stylesheet -->
-    <link rel="stylesheet" href="../app/assets/css/quizWiz.css">
+    <link rel="stylesheet" href="../../assets/css/quizWiz.css">
     <!-- added google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,22 +23,28 @@
             <div class="col-6 qw-blue-container">
                 <div class="qw-card-inner-layout">
                     <div>
-                        <img class="qw-card-icon-layout" src="../app/assets/img/quiz_wiz_logo.svg">
+                        <img class="qw-card-icon-layout" src="../../assets/img/quiz_wiz_logo.svg">
                     </div>
                     <div>
-                        <a class="qw-red-button" href="login.php">Back</a>
+                        <p>Ready to quiz? Login now and put your knowledge to the test!</p>
+                    </div>
+                    <div>
+                        <p>Don't have an account yet? No worries, switch to our Sign Up page to join the quiz fun!"</p>
+                    </div>
+                    <div>
+                        <a class="qw-red-button" href="register.php">Register</a>
                     </div>
                 </div>
             </div>
             <div class="col-6" style="padding: 2em">
-                <h2>Reset Password</h2>
+                <h2>LOGIN</h2>
                 <form class="qw-form col d-flex flex-column justify-content-between">
+
                     <div class="form-group">
                         <label for="usernameInput">Username / Email</label>
                         <input type="text" class="form-control" id="usernameInput" aria-describedby="usernameInput" placeholder="Username/Email">
                         <small id="usernameInput" class="form-text text-muted">You can enter your username or email</small>
                     </div>
-
                     <div class="form-group">
                         <label for="passwordInput">Password</label>
                         <input type="password" class="form-control" id="passwordInput" placeholder="Password">
@@ -48,7 +54,11 @@
                         <input type="password" class="form-control" id="repeatPasswordInput" placeholder="Repeat Password">
                     </div>
                     <div>
-                        <button class="qw-red-button" type="submit">Reset Password</button>
+                        <button class="qw-red-button" type="submit">Login</button>
+                    </div>
+
+                    <div>
+                        <a href="forget_password.php">Forget password?</a>
                     </div>
                 </form>
             </div>

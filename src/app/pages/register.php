@@ -2,12 +2,12 @@
 <html>
 <head>
     <title>QuizWiz</title>
-    <link rel="icon" href="../app/assets/img/logo_icon.svg">
+    <link rel="icon" href="../../assets/img/logo_icon.svg">
     <!-- Adding bootstrap library -->
-    <link rel="stylesheet" href="../app/assets/bootstrap/css/bootstrap.css">
-    <script src="../app/assets/bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.css">
+    <script src="../../assets/bootstrap/js/bootstrap.js"></script>
     <!-- Custom stylesheet -->
-    <link rel="stylesheet" href="../app/assets/css/quizWiz.css">
+    <link rel="stylesheet" href="../../assets/css/quizWiz.css">
     <!-- added google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +20,7 @@
                 <div class="col-6 qw-blue-container">
                         <div class="qw-card-inner-layout">
                             <div>
-                                <img class="qw-card-icon-layout" src="../app/assets/img/quiz_wiz_logo.svg">
+                                <img class="qw-card-icon-layout" src="../../assets/img/quiz_wiz_logo.svg">
                             </div>
                             <div>
                                 <p>Ready to embark on a quizzing adventure? Sign up for Quiz Wiz and unlock a world of knowledge.</p>
@@ -79,7 +79,7 @@
 
 <?php
 
-require_once '../app/services/QuizWizDB.php';
+require_once '../services/QuizWizDB.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve user-inputted values
