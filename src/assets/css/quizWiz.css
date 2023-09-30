@@ -132,6 +132,21 @@ a:link, a:visited, a:hover, a:active{
     box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
 }
 
+.qw-option-selected {
+    border-color: var(--qw-pastal-yellow);
+    background: var(--qw-pastal-yellow);
+}
+
+.qw-option-correct {
+    border-color: var(--qw-pastal-green);
+    background: var(--qw-pastal-green);
+}
+
+.qw-option-wrong {
+    border-color: var(--qw-pastal-red);
+    background: var(--qw-pastal-red);
+}
+
 /* Apply margin-right: 2.5% to the 1st and 3rd elements */
 .qw-options-container .row .qw-option:nth-child(2n+1) {
     margin-right: 2.5%;

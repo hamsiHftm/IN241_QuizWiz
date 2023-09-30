@@ -4,6 +4,7 @@ class Answer
 {
     private $answerText;
     private $correctAnswer;
+    private $isUserSelected;
 
     public function __construct($text, $correctAnswer)
     {
@@ -17,5 +18,14 @@ class Answer
 
     public function isCorrectAnswer() {
         return $this->correctAnswer;
+    }
+
+    public function setUserSelected($isSelected): void
+    {
+        $this->isUserSelected = $isSelected;
+    }
+
+    public function isUserSelected() {
+        return $this->isUserSelected;
     }
 }

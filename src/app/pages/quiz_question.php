@@ -4,6 +4,7 @@ require_once '../models/Answer.php';
 require_once '../models/Question.php';
 session_start();
 
+// TODO track user selected answer
 // Get the value of param1 from the query parameter
 $questionNr = null;
 if (isset($_GET['nr'])) {
@@ -19,27 +20,6 @@ if (isset($_SESSION['quiz'])) {
         $currentQuestion = $quiz->getQuestions()[$questionNr - 1];
     }
 }
-
-if ($questionNr == 10) {
-    if (isset($_SESSION['quiz'])) {
-        unset($_SESSION['quiz']);
-    }
-}
-
-
-// Check if an "evaluate_question" button was clicked
-if (isset($_POST['evaluate_question'])) {
-    // Process the evaluation here if needed
-    // ...
-
-    // After processing, set a session variable to indicate an evaluation has been made
-    $_SESSION['evaluation_made'] = true;
-
-    // Redirect to the same page to show the "Next" button
-    header("Location: quiz_question.php?nr=". $questionNr);
-    exit();
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -59,56 +39,94 @@ if (isset($_POST['evaluate_question'])) {
 </head>
 <body>
     <div class="container">
+        <!-- Progress bar container -->
         <div class="qw-progress-container">
             <div class="d-flex align-items-center justify-content-center">
-                5 / 10
+                <?php echo $questionNr ?> / 10
             </div>
             <div class="progress">
-                <div class="progress-bar w-50" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" style="width: <?php echo $questionNr*10 ?>%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
         </div>
 
         <div class="qw-question-container">
+            <!-- Question Block -->
             <div class="qw-question container-fluid">
                 <?php echo $currentQuestion->getQuestionText() ?>
             </div>
+            <!-- Answer block -->
             <div class="container qw-options-container">
                 <div class="row row-cols-2">
                 <?php
+
                 foreach ($currentQuestion->getAnswers() as $answer) {
-                    echo '<button type="submit" name="evaluate_question" value="' . $answer->getAnswerText() . '" class="qw-option">' . $answer->getAnswerText() . '</button>';
+                    echo '<div class="qw-option" onClick="selectAnswer(this)" data-correct="'. $answer->isCorrectAnswer() . '">' . $answer->getAnswerText() . '</div>';
                 }
                 ?>
                 </div>
             </div>
 
-            <?php
-            // Check if an evaluation has been made (after the form submission)
-            if (isset($_SESSION['evaluation_made']) && $_SESSION['evaluation_made'] === true) {
-                // Show the "Next" button after an evaluation is made
-                echo '<div class="qw-button-container d-flex align-items-center justify-content-center">';
-                echo '<button id="next-question-btn" type="submit" name="go_to_next_question" class="qw-red-button">Next</button>';
-                echo '</div>';
+            <div class="qw-button-container d-flex align-items-center justify-content-center">
+                <button onclick="evaluate_solution(this)" class="qw-red-button">Check</button>
+            </div>
+            <br>
+            <div id="solution-alert" class="alert alert-warning" style="display: none">
+                Please select a answer before submitting the answer!
+            </div>
 
-                // Reset the session variable to allow showing the "Next" button again for the next question
-                $_SESSION['evaluation_made'] = false;
-            }
-            ?>
-<!--            -->
-<!--            <div class="qw-button-container d-flex align-items-center justify-content-center">-->
-<!--                <button type="submit" name="go_to_next_question" class="qw-red-button">Next</button>-->
-<!--            </div>-->
+            <div class="qw-button-container d-flex align-items-center justify-content-center">
+                <button id="next-question-btn" style="display: none" onclick="go_to_next_question()"  class="qw-red-button">Next</button>
+            </div>
+
         </div>
-        <?php
-        if (isset($_POST['evaluate_question'])) {
-            $selectedValue = $_POST['evaluate_question'];
-            // Do something with the selected value, e.g., store it in a database, perform some action, etc.
-            // For this example, we'll just echo the value back as the response.
-            echo $selectedValue;
-        }
-        ?>
-
     </div>
+    <script>
+        // add styling when a answer is selected
+        function selectAnswer(curr_element) {
+            let elements = document.getElementsByClassName("qw-option");
+            for(let i = 0; elements.length > i; i++) {
+                if (curr_element.textContent === elements[i].textContent) {
+                    elements[i].classList.add("qw-option-selected");
+                } else {
+                    elements[i].classList.remove("qw-option-selected");
+                }
+            }
+        }
+
+        // evaluate solution
+        function evaluate_solution(btn_elm) {
+            // Todo prevent from clickable
+            let sel_elm = document.getElementsByClassName("qw-option-selected");
+            if (sel_elm && sel_elm[0]) {
+                if (sel_elm[0].dataset.correct === "1") {
+                    sel_elm[0].classList.add('qw-option-correct');
+                } else {
+                    sel_elm[0].classList.add('qw-option-wrong');
+                }
+                btn_elm.style.display = "none";
+                document.getElementById('next-question-btn').style.display = 'block';
+                document.getElementById('solution-alert').style.display = 'none';
+            } else {
+                document.getElementById('solution-alert').style.display = 'block';
+            }
+        }
+
+        function go_to_next_question() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var quizNr = parseInt(urlParams.get('nr')) || 1; // Default to 1 if nr is not present or not a valid number
+
+            // Increment the quiz number
+            quizNr++;
+
+            // If the quiz number reaches 11, reset it to 1
+            if (quizNr > 10) {
+                window.location.href = 'score.php';
+            } else {
+                // Reload the page with the updated quiz number
+                window.location.href = 'quiz_question.php?nr=' + quizNr;
+            }
+        }
+    </script>
 </body>
 </html>
 
