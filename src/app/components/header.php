@@ -7,7 +7,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="../pages/home.php">
-            <img style="width: 150px" src="../../assets/img/quiz_wiz_logo.svg" alt="QuizWiz"/>
+            <img style="width: 150px" src="../../assets/img/quiz-wiz-logo-with-slogan.png" alt="QuizWiz"/>
         </a>
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo03">

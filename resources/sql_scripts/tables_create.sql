@@ -2,7 +2,6 @@ CREATE TABLE IF NOT EXISTS Player (
 	id serial PRIMARY KEY,
 	username VARCHAR(50) UNIQUE NOT NULL,
 	password VARCHAR(500) NOT NULL,
-	salt VARCHAR(250) NOT NULL,
 	first_name VARCHAR(150),
 	last_name VARCHAR(150),
 	date_of_birth DATE,

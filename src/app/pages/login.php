@@ -1,4 +1,31 @@
 <?php
+include '../../config.php';
+require_once '../services/QuizWizDB.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
+    // Retrieve user-entered values
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    $db_host = $GLOBALS['DB_HOST'];
+    $db_port = $GLOBALS['DB_PORT'];
+    $dbname = $GLOBALS['DB_NAME'];
+    $db_user = $GLOBALS['DB_USERNAME'];
+    $db_password = $GLOBALS['DB_PASSWORD'];
+    $db = new QuizWizDB($db_host, $db_port, $dbname, $db_user, $db_password);
+
+    $result = $db->loginUser($username, $password);
+    if ($result) {
+        echo "<script>
+                            console.log('User registered successfully.');
+                            document.getElementById('success-msg').style.display = 'block';
+                      </script>";
+        // TODO --> Display block is not working
+    } else {
+        echo "<script>alert('User registration failed');</script>";
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -42,16 +69,12 @@
 
                     <div class="form-group">
                         <label for="usernameInput">Username / Email</label>
-                        <input type="text" class="form-control" id="usernameInput" aria-describedby="usernameInput" placeholder="Username/Email">
+                        <input type="text" class="form-control" id="usernameInput" name="username" aria-describedby="usernameInput" placeholder="Username/Email">
                         <small id="usernameInput" class="form-text text-muted">You can enter your username or email</small>
                     </div>
                     <div class="form-group">
                         <label for="passwordInput">Password</label>
-                        <input type="password" class="form-control" id="passwordInput" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <label for="repeatPasswordInput">Repeat Password</label>
-                        <input type="password" class="form-control" id="repeatPasswordInput" placeholder="Repeat Password">
+                        <input type="password" class="form-control" name="password" id="passwordInput" placeholder="Password">
                     </div>
                     <div>
                         <button class="qw-red-button" type="submit">Login</button>
