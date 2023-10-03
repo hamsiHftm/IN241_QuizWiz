@@ -1,4 +1,5 @@
-<!-- it's not been used -->
+<!-- TODO check if its need to remove
+it's not been used -->
 
 
 <div class="container-fluid landing-page-container">
