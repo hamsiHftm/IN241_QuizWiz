@@ -3,10 +3,10 @@
     include '../../config.php';
     require_once '../models/Difficulty.php';
     require_once '../models/QuestionType.php';
-    require_once '../services/OpenTriviaAPI.php';
+    require_once '../services/OpenTriviaAPIService.php';
 
 $api_base_url = $GLOBALS['API_BASE_URL'];
-$triviaAPI = new OpenTriviaAPI($api_base_url, null); # TODO make instanz Varaible
+$triviaAPI = new OpenTriviaAPIService($api_base_url, null); # TODO make instanz Varaible
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $quiz = $triviaAPI->getQuestions($GLOBALS['NR_OF_QUESTIONS'], $selectedCategory, $selectedDifficulty, $selectedType);
         if ($quiz) {
             $_SESSION['quiz'] = $quiz;
-            header("Location: quiz_question.php?nr=1");
+            header("Location: QuizQuestionPage.php?nr=1");
         }
         exit;
     }
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500&family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
 </head>
 <body>
-    <?php include '../components/header.php'; ?>
+    <?php include '../components/HeaderComponent.php'; ?>
 
     <div class="container-sm">
         <div class="qw-content">
@@ -104,6 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
         </div>
     </div>
-    <?php include '../components/footer.php'; ?>
+    <?php include '../components/FooterComponent.php'; ?>
 </body>
 </html>

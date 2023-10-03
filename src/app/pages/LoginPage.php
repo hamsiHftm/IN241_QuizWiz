@@ -1,6 +1,6 @@
 <?php
 require '../../config.php';
-require '../services/QuizWizDB.php';
+require '../services/QuizWizDBService.php';
 require '../controllers/LocalStorageController.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
@@ -13,14 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
     $dbname = $GLOBALS['DB_NAME'];
     $db_user = $GLOBALS['DB_USERNAME'];
     $db_password = $GLOBALS['DB_PASSWORD'];
-    $db = new QuizWizDB($db_host, $db_port, $dbname, $db_user, $db_password);
+    $db = new QuizWizDBService($db_host, $db_port, $dbname, $db_user, $db_password);
 
     $user = $db->loginUser($username, $password);
     if ($user !== null) {
         LocalStorageController::storeData(LocalStorageController::LOGGED_USER_DATA, $user->toArray());
         echo "<script>
                        console.log('User logged-in successfully.');
-                        window.location.href = 'home.php';
+                        window.location.href = 'HomePage.php';
                     </script>";
     } else {
         echo "<script>
@@ -61,13 +61,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
                         <p>Don't have an account yet? No worries, switch to our Sign Up page to join the quiz fun!"</p>
                     </div>
                     <div>
-                        <a class="qw-red-button" href="register.php">Register</a>
+                        <a class="qw-red-button" href="RegisterPage.php">Register</a>
                     </div>
                 </div>
             </div>
             <div class="col-6" style="padding: 2em">
                 <h2>LOGIN</h2>
-                <form class="qw-form col d-flex flex-column justify-content-between" method="POST" action="login.php">
+                <form class="qw-form col d-flex flex-column justify-content-between" method="POST" action="LoginPage.php">
 
                     <div class="form-group">
                         <label for="usernameInput">Username / Email</label>
@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
                     </div>
 
                     <div>
-                        <a href="forget_password.php">Forget password?</a>
+                        <a href="ForgetPasswordPage.php">Forget password?</a>
                     </div>
                 </form>
             </div>

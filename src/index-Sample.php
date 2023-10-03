@@ -21,12 +21,12 @@ include 'config.php';
 
 $showLandingPage = $GLOBALS['SHOW_LANDING_PAGE'];
 if ($showLandingPage) {
-    include 'app/pages/landing.php';
+    include 'app/pages/LandingPage.php';
 } else {
     include 'app/models/Category.php';
     include 'app/models/Difficulty.php';
-    require_once 'app/services/QuizWizDB.php';
-    require_once 'app/services/OpenTriviaAPI.php';
+    require_once 'app/services/QuizWizDBService.php';
+    require_once 'app/services/OpenTriviaAPIService.php';
 
     // Database connection parameters
     $host = $GLOBALS['DB_HOST'];
@@ -37,10 +37,10 @@ if ($showLandingPage) {
 
     $api_base_url = $GLOBALS['API_BASE_URL'];
 
-    $database = new QuizWizDB($host, $port, $dbname, $user, $password);
+    $database = new QuizWizDBService($host, $port, $dbname, $user, $password);
     $pdo = $database->getConnection();
 
-    $triviaAPI = new OpenTriviaAPI($api_base_url, null);
+    $triviaAPI = new OpenTriviaAPIService($api_base_url, null);
     $category_list = $triviaAPI->getCategories();
 
     $quiz = $triviaAPI->getQuestions(10, new Category(24, "Politics"), Difficulty::Easy->value);

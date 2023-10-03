@@ -1,7 +1,7 @@
 <?php
 
 /**
- * OpenTriviaAPI functional class
+ * OpenTriviaAPIService functional class
  *
  * Includes methods to retrieve and interact with data from OpenTrivia
  * 1. getCategories --> get all the quiz topic
@@ -11,7 +11,7 @@ include __DIR__ . '/../models/Quiz.php';
 include __DIR__ . '/../models/Question.php';
 include __DIR__ . '/../models/Answer.php';
 
-class OpenTriviaAPI
+class OpenTriviaAPIService
 {
     private $baseURL;
     private $token;

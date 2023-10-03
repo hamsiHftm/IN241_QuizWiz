@@ -26,7 +26,7 @@
                         <img class="qw-card-icon-layout" src="../../assets/img/quiz_wiz_logo.svg">
                     </div>
                     <div>
-                        <a class="qw-red-button" href="login.php">Back</a>
+                        <a class="qw-red-button" href="LoginPage.php">Back</a>
                     </div>
                 </div>
             </div>

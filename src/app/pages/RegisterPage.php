@@ -1,6 +1,6 @@
 <?php
 include '../../config.php';
-require_once '../services/QuizWizDB.php';
+require_once '../services/QuizWizDBService.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
     // Retrieve user-entered values
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
         $dbname = $GLOBALS['DB_NAME'];
         $db_user = $GLOBALS['DB_USERNAME'];
         $db_password = $GLOBALS['DB_PASSWORD'];
-        $db = new QuizWizDB($db_host, $db_port, $dbname, $db_user, $db_password);
+        $db = new QuizWizDBService($db_host, $db_port, $dbname, $db_user, $db_password);
 
         $result = $db->registerUser($username, $password, $firstname, $lastname, $dateOfBirth);
         if ($result) {
@@ -83,13 +83,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
                             us!</p>
                     </div>
                     <div>
-                        <a class="qw-red-button" href="login.php">Login</a>
+                        <a class="qw-red-button" href="LoginPage.php">Login</a>
                     </div>
                 </div>
             </div>
             <div class="col-6" style="padding: 2em">
                 <h2>SIGNUP</h2>
-                <form action="register.php" method="post"
+                <form action="RegisterPage.php" method="post"
                       class="qw-form col d-flex flex-column justify-content-between">
                     <div class="form-group">
                         <label for="firstnameInput">Firstname</label>

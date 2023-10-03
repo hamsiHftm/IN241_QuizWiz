@@ -21,15 +21,17 @@ class LocalStorageController
 
     public static function parseData($key)
     {
-        // Generate JavaScript code to parse data from localStorage
+        // Retrieve the JSON data from localStorage
+        $jsonData = json_decode('<script>localStorage.getItem("' . $key . '")</script>', true);
+
         $jsCode = <<<EOT
             <script>
-                var jsonData = localStorage.getItem('$key');
-                var parsedData = JSON.parse(jsonData);
-                console.log(parsedData);
+                console.log(localStorage.getItem('$key'));
             </script>
         EOT;
         echo $jsCode;
+        // Return the parsed data as a PHP array
+        return $jsonData;
     }
 
     public static function deleteData($key) {

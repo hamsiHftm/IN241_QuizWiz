@@ -12,7 +12,7 @@ require '../models/User.php';
  *
  */
 
-class QuizWizDB
+class QuizWizDBService
 {
     private $host;
     private $port;
