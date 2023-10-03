@@ -59,9 +59,6 @@ class AuthController
     public static function getUser(): ?User
     {
         // Get user data from the session if the user is logged in
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
         if (isset($_SESSION['user'])) {
             // Create a User object from the session data using the fromArray method
             return User::fromArray($_SESSION['user']);
