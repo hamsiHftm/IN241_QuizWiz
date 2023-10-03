@@ -28,6 +28,7 @@ if (isset($_SESSION['quiz'])) {
     <?php require_once '../components/HeadComponent.php' ?>
 </head>
 <body>
+<?php require_once '../components/HeaderComponent.php'; ?>
     <div class="container">
         <!-- Progress bar container -->
         <div class="qw-progress-container">
@@ -113,10 +114,12 @@ if (isset($_SESSION['quiz'])) {
                 window.location.href = 'score.php';
             } else {
                 // Reload the page with the updated quiz number
-                window.location.href = 'quiz_question.php?nr=' + quizNr;
+                window.location.href = 'QuizQuestionPage.php?nr=' + quizNr;
             }
         }
     </script>
+
+    <?php require_once '../components/FooterComponent.php'; ?>
 </body>
 </html>
 
