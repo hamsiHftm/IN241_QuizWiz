@@ -1,12 +1,13 @@
 <?php
-include '../../config.php';
-require_once '../services/QuizWizDB.php';
+require '../../config.php';
+require '../services/QuizWizDB.php';
+require '../controllers/LocalStorageController.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
+
     // Retrieve user-entered values
     $username = $_POST["username"];
     $password = $_POST["password"];
-
     $db_host = $GLOBALS['DB_HOST'];
     $db_port = $GLOBALS['DB_PORT'];
     $dbname = $GLOBALS['DB_NAME'];
@@ -14,15 +15,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
     $db_password = $GLOBALS['DB_PASSWORD'];
     $db = new QuizWizDB($db_host, $db_port, $dbname, $db_user, $db_password);
 
-    $result = $db->loginUser($username, $password);
-    if ($result) {
+    $user = $db->loginUser($username, $password);
+    if ($user !== null) {
+        LocalStorageController::storeData(LocalStorageController::LOGGED_USER_DATA, $user->toArray());
         echo "<script>
-                            console.log('User registered successfully.');
-                            document.getElementById('success-msg').style.display = 'block';
-                      </script>";
-        // TODO --> Display block is not working
+                       console.log('User logged-in successfully.');
+                        window.location.href = 'home.php';
+                    </script>";
     } else {
-        echo "<script>alert('User registration failed');</script>";
+        echo "<script>
+                console.log('User registration failed');</script>";
     }
 }
 
@@ -65,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
             </div>
             <div class="col-6" style="padding: 2em">
                 <h2>LOGIN</h2>
-                <form class="qw-form col d-flex flex-column justify-content-between">
+                <form class="qw-form col d-flex flex-column justify-content-between" method="POST" action="login.php">
 
                     <div class="form-group">
                         <label for="usernameInput">Username / Email</label>

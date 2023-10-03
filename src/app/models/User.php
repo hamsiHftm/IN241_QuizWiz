@@ -2,6 +2,7 @@
 
 class User
 {
+    private $dbId;
     private $username;
     private $firstname;
     private $lastname;
@@ -9,8 +10,9 @@ class User
     private $scoredHighScore;
     private $nrOfPlayedGames;
 
-    public function __construct($username, $firstname, $lastname, $dateOfBirth)
+    public function __construct($dbId, $username, $firstname, $lastname, $dateOfBirth)
     {
+        $this->dbId = $dbId;
         $this->username = $username;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
@@ -71,6 +73,16 @@ class User
     public function setNrOfPlayedGames($nrOfPlayedGames): void
     {
         $this->nrOfPlayedGames = $nrOfPlayedGames;
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->dbId,
+            'username' => $this->username,
+            'firstname' => $this->firstname,
+            'lastname' => $this->lastname
+        ];
     }
 
 

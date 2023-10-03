@@ -168,6 +168,15 @@ a:link, a:visited, a:hover, a:active{
     margin-bottom: 5vh;
 }
 
+.qw-hide {
+    display: none !important;
+}
+
+.qw-show {
+    display: block !important;
+    opacity: 1;
+}
+
 /***************************************
  Landing Page Style
 ****************************************/

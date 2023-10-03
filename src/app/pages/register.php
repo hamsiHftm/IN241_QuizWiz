@@ -28,11 +28,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
         if ($result) {
             echo "<script>
                             console.log('User registered successfully.');
-                            document.getElementById('success-msg').style.display = 'block';
+                            const success_elm = document.getElementById('success-alert');
+                            success_elm.classList.add('qw-show')
+                            success_elm.classList.remove('qw-hide')
                       </script>";
-            // TODO --> Display block is not working
         } else {
-            echo "<script>alert('User registration failed');</script>";
+            echo "<script>
+                            console.log('User registration failed.');
+                            const failed_elem = document.getElementById('failed-alert');
+                            failed_elem.classList.add('qw-show')
+                            console.log('added')
+                            failed_elem.classList.remove('qw-hide')
+                            console.log('removed')
+                      </script>";
         }
     }
 }
@@ -86,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
                     <div class="form-group">
                         <label for="firstnameInput">Firstname</label>
                         <input type="text" class="form-control" id="firstnameInput" name="firstname"
-                               aria-describedby="firstnameInputHelp" placeholder="Enter name">
+                               aria-describedby="firstnameInputHelp" placeholder="Enter name" required>
                         <small id="firstnameInputHelp" class="form-text text-muted">Enter your full name. (eg. Hans
                             Muster)</small>
                     </div>
@@ -94,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
                     <div class="form-group">
                         <label for="lastnameInput">Lastname</label>
                         <input type="text" class="form-control" id="lastnameInput" name="lastname"
-                               aria-describedby="nameInputHelp" placeholder="Enter name">
+                               aria-describedby="nameInputHelp" placeholder="Enter name" required>
                         <small id="lastnameInputHelp" class="form-text text-muted">Enter your full name. (eg. Hans
                             Muster)</small>
                     </div>
@@ -130,9 +138,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
                     <div>
                         <button class="qw-red-button" type="submit">Register</button>
                     </div>
-                    <!-- TODO Style it clearly -->
-                    <div id="success-msg" class="alert alert-success" role="alert" style="display: none">
-                        <p>Successfully created!!</p>
+
+                    <!-- TODO its not working -->
+                    <!-- TODO show, if user already exits not failed -->
+                    <div id="success-alert" class="alert alert-success qw-hide" role="alert">
+                        Account Successfully created!
+                    </div>
+
+                    <div id="failed-alert" class="alert alert-danger qw-hide" role="alert">
+                        Account Successfully created!
                     </div>
                 </form>
             </div>

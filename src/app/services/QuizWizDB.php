@@ -1,5 +1,7 @@
 <?php
 
+require '../models/User.php';
+
 /*
  * Contains all the DB functions
  *
@@ -50,34 +52,34 @@ class QuizWizDB
 
     public function registerUser($username, $password, $first_name = null, $last_name = null, $date_of_birth = null): bool
     {
-            try {
-                // Prepare the SQL statement for inserting a new player
-                $stmt = $this->pdo->prepare("
+        try {
+            // Prepare the SQL statement for inserting a new player
+            $stmt = $this->pdo->prepare("
                 INSERT INTO Player (username, password, first_name, last_name, date_of_birth)
                 VALUES (:username, :password, :first_name, :last_name, :date_of_birth)
             ");
-                // Hashing the password for security
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            // Hashing the password for security
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-                // Bind the parameters to the prepared statement
-                $stmt->bindParam(':username', $username, PDO::PARAM_STR);
-                $stmt->bindParam(':password', $hashed_password, PDO::PARAM_STR);
-                $stmt->bindParam(':first_name', $first_name, PDO::PARAM_STR);
-                $stmt->bindParam(':last_name', $last_name, PDO::PARAM_STR);
-                $stmt->bindParam(':date_of_birth', $date_of_birth, PDO::PARAM_STR);
+            // Bind the parameters to the prepared statement
+            $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+            $stmt->bindParam(':password', $hashed_password, PDO::PARAM_STR);
+            $stmt->bindParam(':first_name', $first_name, PDO::PARAM_STR);
+            $stmt->bindParam(':last_name', $last_name, PDO::PARAM_STR);
+            $stmt->bindParam(':date_of_birth', $date_of_birth, PDO::PARAM_STR);
 
-                // Execute the prepared statement
-                $stmt->execute();
+            // Execute the prepared statement
+            $stmt->execute();
 
-                // Return true to indicate successful registration
-                return true;
-            } catch (PDOException $e) {
-                // Handle any database errors and return false to indicate failure
-                return false;
-            }
+            // Return true to indicate successful registration
+            return true;
+        } catch (PDOException $e) {
+            // Handle any database errors and return false to indicate failure
+            return false;
+        }
     }
 
-    public function loginUser($username, $password): bool
+    public function loginUser($username, $password): ?User
     {
         try {
             // Prepare the SQL statement for get the player
@@ -89,23 +91,24 @@ class QuizWizDB
             // Execute the prepared statement
             $stmt->execute();
 
-            $result = $stmt->get_result();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($result->num_rows === 1) {
+            if ($result !== false && password_verify($password, $result['password'])) {
                 // User found, verify password
-                $row = $result->fetch_assoc();
-                if (password_verify($password, $row['password'])) {
-                    return true; // Password is correct
-                } else {
-                    return false; // Incorrect password
-                }
+                return new User(
+                    $result['id'],
+                    $result['username'],
+                    $result['first_name'],
+                    $result['last_name'],
+                    $result['date_of_birth']
+                );
             } else {
-                return false; // User not found
+                return null;// Incorrect password
             }
 
         } catch (PDOException $e) {
             // Handle any database errors and return false to indicate failure
-            return false;
+            return null;
         }
     }
 }
