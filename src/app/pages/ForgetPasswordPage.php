@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <?php require_once '../components/HeadComponent.php' ?>
+    <link rel="stylesheet" href="../../assets/css/LoginAndRegistrationStyle.css">
 </head>
 <body>
 <div class="qw-card-layout d-flex align-items-center justify-content-center">
