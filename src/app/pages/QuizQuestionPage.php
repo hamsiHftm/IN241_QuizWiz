@@ -5,6 +5,7 @@ require_once '../models/Question.php';
 session_start();
 
 // TODO prvent from going back
+// TODO timer (nice to have)
 // Get the value of param1 from the query parameter
 $questionNr = null;
 if (isset($_GET['nr'])) {
@@ -18,6 +19,7 @@ if (isset($_SESSION['quiz'])) {
 
     if ($quiz instanceof Quiz) {
         $currentQuestion = $quiz->getQuestions()[$questionNr - 1];
+        $quiz->addPoints($currentQuestion->getQuestionDifficulty());
     }
 }
 ?>
@@ -62,7 +64,8 @@ if (isset($_SESSION['quiz'])) {
 
         <div class="qw-question-score-container d-flex justify-content-between">
             <div class="qw-score d-flex align-items-center justify-content-center">
-                <span>Current Score: <strong>9870</strong></span>
+                <!-- TODO points will caluclate always -->
+                <span>Current Score: <strong><?php echo $quiz->getCurrentPoints()?></strong></span>
             </div>
 
             <div class="qw-button-container d-flex align-items-center justify-content-center">

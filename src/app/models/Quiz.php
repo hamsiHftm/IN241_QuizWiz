@@ -40,8 +40,14 @@ class Quiz
         $this->questions[] = $question;
     }
 
-    public function addPoints() {
-        # TODO calculate points --> Strategy has to be defined
+    public function addPoints($difficulty) {
+        if ($difficulty === 'easy') {
+            $this->currentPoints += 250;
+        } elseif ($difficulty === 'medium') {
+            $this->currentPoints += 500;
+        } elseif ($difficulty === 'hard') {
+            $this->currentPoints += 1000;
+        }
     }
 
 }
