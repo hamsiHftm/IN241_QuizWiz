@@ -52,12 +52,20 @@ class AuthController
 
     public static function isLoggedIn(): bool
     {
+        // Start the session if not already started
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         // Check if a session is already started and a user is logged in
         return isset($_SESSION['user']);
     }
 
     public static function getUser(): ?User
     {
+        // Start the session if not already started
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         // Get user data from the session if the user is logged in
         if (isset($_SESSION['user'])) {
             // Create a User object from the session data using the fromArray method
