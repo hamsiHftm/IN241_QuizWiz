@@ -88,6 +88,18 @@ if (isset($_SESSION['quiz'])) {
 
         // evaluate solution
         function evaluate_solution(btn_elm) {
+            // let elements = document.getElementsByClassName("qw-option");
+            // for(let i = 0; elements.length > i; i++) {
+            //     let curr_element = elements[i];
+            //     if (curr_element.classList.contains("qw-option-selected")) {
+            //         if (curr_element[0].dataset.correct === "1") {
+            //             curr_element.classList.add('qw-option-correct');
+            //         } else {
+            //
+            //         }
+            //     }
+            // }
+
             // Todo prevent from clickable
             let sel_elm = document.getElementsByClassName("qw-option-selected");
             if (sel_elm && sel_elm[0]) {

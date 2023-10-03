@@ -38,6 +38,14 @@ class User
     /**
      * @return mixed
      */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getDateOfBirth()
     {
         return $this->dateOfBirth;
