@@ -4,14 +4,12 @@ class Quiz
 {
     private $category;
     private $questions;
-    private $difficulty;
     private $questionType;
     private $currentPoints;
 
-    public function __construct($category, $difficulty, $questionType)
+    public function __construct($category, $questionType)
     {
         $this->category = $category;
-        $this->difficulty = $difficulty;
         $this->questionType = $questionType;
         $this->currentPoints = 0;
         $this->questions = array();
@@ -20,11 +18,6 @@ class Quiz
     public function getCategory()
     {
         return $this->category;
-    }
-
-    public function getDifficulty()
-    {
-        return $this->difficulty;
     }
 
     public function getQuestionType()
@@ -48,7 +41,7 @@ class Quiz
     }
 
     public function addPoints() {
-        # calculate points --> Strategy has to be defined
+        # TODO calculate points --> Strategy has to be defined
     }
 
 }

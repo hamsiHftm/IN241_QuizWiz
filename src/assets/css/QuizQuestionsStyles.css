@@ -38,6 +38,12 @@
     background: var(--qw-pastal-green);
 }
 
+.qw-option-correct-border {
+    border-color: var(--qw-pastal-green);
+    color: var(--qw-pastal-green);
+    background: var(--qw-white);
+}
+
 .qw-option-wrong {
     border-color: var(--qw-pastal-red);
     background: var(--qw-pastal-red);
@@ -62,4 +68,8 @@
 .qw-progress-container {
     padding: 20px 0;
     margin-bottom: 5vh;
+}
+
+.qw-progress-bar {
+    background: var(--qw-red);
 }

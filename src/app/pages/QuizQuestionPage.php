@@ -4,7 +4,7 @@ require_once '../models/Answer.php';
 require_once '../models/Question.php';
 session_start();
 
-// TODO track user selected answer
+// TODO prvent from going back
 // Get the value of param1 from the query parameter
 $questionNr = null;
 if (isset($_GET['nr'])) {
@@ -38,7 +38,7 @@ if (isset($_SESSION['quiz'])) {
                 <?php echo $questionNr ?> / 10
             </div>
             <div class="progress">
-                <div class="progress-bar" style="width: <?php echo $questionNr*10 ?>%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar qw-progress-bar" style="width: <?php echo $questionNr*10 ?>%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
         </div>
 
@@ -58,26 +58,32 @@ if (isset($_SESSION['quiz'])) {
                 ?>
                 </div>
             </div>
+        </div>
+
+        <div class="qw-question-score-container d-flex justify-content-between">
+            <div class="qw-score d-flex align-items-center justify-content-center">
+                <span>Current Score: <strong>9870</strong></span>
+            </div>
 
             <div class="qw-button-container d-flex align-items-center justify-content-center">
                 <button onclick="evaluate_solution(this)" class="qw-red-button">Check</button>
+                <button id="next-question-btn" onclick="go_to_next_question()" style="display:none;" class="qw-red-button">Next</button>
             </div>
-            <br>
-            <div id="solution-alert" class="alert alert-warning" style="display: none">
-                Please select a answer before submitting the answer!
-            </div>
-
-            <div class="qw-button-container d-flex align-items-center justify-content-center">
-                <button id="next-question-btn" style="display: none" onclick="go_to_next_question()"  class="qw-red-button">Next</button>
-            </div>
-
         </div>
+        <br>
+        <div id="solution-alert" class="alert alert-warning" style="display: none">
+            Please select a answer before submitting the answer!
+        </div>
+
     </div>
     <script>
         // add styling when a answer is selected
         function selectAnswer(curr_element) {
             let elements = document.getElementsByClassName("qw-option");
             for(let i = 0; elements.length > i; i++) {
+                if (elements[i].dataset.evaluated === 'true') {
+                    break;
+                }
                 if (curr_element.textContent === elements[i].textContent) {
                     elements[i].classList.add("qw-option-selected");
                 } else {
@@ -88,25 +94,23 @@ if (isset($_SESSION['quiz'])) {
 
         // evaluate solution
         function evaluate_solution(btn_elm) {
-            // let elements = document.getElementsByClassName("qw-option");
-            // for(let i = 0; elements.length > i; i++) {
-            //     let curr_element = elements[i];
-            //     if (curr_element.classList.contains("qw-option-selected")) {
-            //         if (curr_element[0].dataset.correct === "1") {
-            //             curr_element.classList.add('qw-option-correct');
-            //         } else {
-            //
-            //         }
-            //     }
-            // }
-
-            // Todo prevent from clickable
             let sel_elm = document.getElementsByClassName("qw-option-selected");
+            let is_correct = false;
             if (sel_elm && sel_elm[0]) {
                 if (sel_elm[0].dataset.correct === "1") {
                     sel_elm[0].classList.add('qw-option-correct');
+                    is_correct = true;
                 } else {
                     sel_elm[0].classList.add('qw-option-wrong');
+                }
+                // Find and highlight the correct answer
+                let options = document.getElementsByClassName("qw-option");
+                for (let i = 0; i < options.length; i++) {
+                    if (!is_correct && options[i].dataset.correct === "1") {
+                        options[i].classList.add('qw-option-correct-border');
+                    }
+                    // Set the evaluated attribute for all options
+                    options[i].dataset.evaluated = "true";
                 }
                 btn_elm.style.display = "none";
                 document.getElementById('next-question-btn').style.display = 'block';
@@ -125,7 +129,7 @@ if (isset($_SESSION['quiz'])) {
 
             // If the quiz number reaches 11, reset it to 1
             if (quizNr > 10) {
-                window.location.href = 'score.php';
+                window.location.href = 'ScorePage.php';
             } else {
                 // Reload the page with the updated quiz number
                 window.location.href = 'QuizQuestionPage.php?nr=' + quizNr;

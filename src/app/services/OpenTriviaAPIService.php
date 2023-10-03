@@ -100,7 +100,8 @@ class OpenTriviaAPIService
                     $quiz = $this->extract_quiz_from_response($category, $difficulty, $questionType, $data['results']);
                     break;
                 case 1:
-                    # TODO return notification to change the difficult to other or chose mixed, otherwis change the category, because not enough question available
+                    # TODO return notification to change the difficult to other or chose mixed,
+                    # otherwis change the category, because not enough question available
                     break;
                 case 3:
                     # TODO create new token and save to the user and request again the question
@@ -118,9 +119,9 @@ class OpenTriviaAPIService
     }
 
     private function extract_quiz_from_response($category, $difficulty, $questionType, $results) {
-        $quiz = new Quiz($category, $difficulty, $questionType);
+        $quiz = new Quiz($category, $questionType);
         foreach ($results as $result) {
-            $question = new Question($result['question']);
+            $question = new Question($result['question'], $result['difficulty']);
             $question->addAnswer(new Answer($result['correct_answer'], true));
 
             foreach ($result['incorrect_answers'] as $incorrect_answer) {
