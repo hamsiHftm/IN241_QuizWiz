@@ -21,7 +21,7 @@ include 'config.php';
 
 $showLandingPage = $GLOBALS['SHOW_LANDING_PAGE'];
 if ($showLandingPage) {
-    include 'app/pages/LandingPage.php';
+    echo '';
 } else {
     include 'app/models/Category.php';
     include 'app/models/Difficulty.php';

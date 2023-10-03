@@ -2,6 +2,7 @@
 <html>
 <head>
     <?php require_once '../components/HeadComponent.php' ?>
+    <link rel="stylesheet" href="../../assets/css/LoginAndRegistrationStyle.css">
 </head>
 <body>
 

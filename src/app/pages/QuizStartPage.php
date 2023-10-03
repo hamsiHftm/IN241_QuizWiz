@@ -30,6 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <?php require_once '../components/HeadComponent.php' ?>
+    <link rel="stylesheet" href="../../assets/css/QuizQuestionsFormsSytle.css">
+
 </head>
 <body>
     <?php require_once '../components/HeaderComponent.php'; ?>

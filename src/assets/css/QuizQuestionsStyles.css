@@ -1,0 +1,65 @@
+@import "VariablesQW.css";
+
+.qw-question-container {
+    width: 100%;
+}
+
+.qw-question {
+    padding: 20px 0;
+    text-align: center;
+    border: 1px var(--qw-grey) solid;
+    border-radius: 5px;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.qw-options-container {
+    padding: 5vh 0;
+}
+
+.qw-option {
+    background: none;
+    padding: 20px 0;
+    text-align: center;
+    border: 1px var(--qw-grey) solid;
+    width: 45%;
+    margin-top: 0.75%;
+    margin-bottom: 0.75%;
+    border-radius: 5px;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.qw-option-selected {
+    border-color: var(--qw-pastal-yellow);
+    background: var(--qw-pastal-yellow);
+}
+
+.qw-option-correct {
+    border-color: var(--qw-pastal-green);
+    background: var(--qw-pastal-green);
+}
+
+.qw-option-wrong {
+    border-color: var(--qw-pastal-red);
+    background: var(--qw-pastal-red);
+}
+
+/* Apply margin-right: 2.5% to the 1st and 3rd elements */
+.qw-options-container .row .qw-option:nth-child(2n+1) {
+    margin-right: 2.5%;
+}
+
+/* Apply margin-left: 2.5% to the 2nd and 4th elements */
+.qw-options-container .row .qw-option:nth-child(2n) {
+    margin-left: 2.5%;
+}
+
+.qw-option:hover, .qw-option.selected,
+.qw-option:active  {
+    border-color: var(--qw-pastal-yellow);
+    background: var(--qw-pastal-yellow);
+}
+
+.qw-progress-container {
+    padding: 20px 0;
+    margin-bottom: 5vh;
+}

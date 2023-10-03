@@ -1,0 +1,17 @@
+@import "VariablesQW.css";
+
+/*
+TODO --> Window size change CSS
+ */
+.landing-page-container {
+    height: 100%
+}
+
+.inner-container {
+    width:70%;
+    font-size: 2em;
+}
+
+.landing-page-logo {
+    width: 60%;
+}

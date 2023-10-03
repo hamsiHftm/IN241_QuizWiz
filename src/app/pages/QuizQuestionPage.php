@@ -26,6 +26,8 @@ if (isset($_SESSION['quiz'])) {
 <html lang="en">
 <head>
     <?php require_once '../components/HeadComponent.php' ?>
+    <link rel="stylesheet" href="../../assets/css/QuizQuestionsStyles.css">
+
 </head>
 <body>
 <?php require_once '../components/HeaderComponent.php'; ?>
