@@ -18,16 +18,16 @@ $user = AuthController::getUser();
                 <?php
                 if ($user !== null) {
                     echo '<li class="nav-item active">
-                    <a class="header-link" href="../pages/quiz_start.php">Quiz</a>
+                    <a class="header-link" href="../pages/QuizStartPage.php">Quiz</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="header-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">'.
+                    <a class="header-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">' .
                         $user->getUsername()
                     .'</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">My Profile</a>
+                        <a class="dropdown-item" href="../pages/ProfilePage.php">My Profile</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Log-Out</a>
+                        <a class="dropdown-item" href="../pages/LogOutPage.php">Logout</a>
                     </div>
                 </li>';
                 }

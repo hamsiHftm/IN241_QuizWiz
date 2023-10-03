@@ -20,8 +20,7 @@
 
                 <?php
                     if (AuthController::isLoggedIn()) {
-                        echo '<a class="qw-red-button" href="quiz_start.php">Take Quiz!</a>';
-                        echo '<a class="qw-red-button" href="LogOutPage.php">Logout</a>';
+                        echo '<a class="qw-red-button" href="QuizStartPage.php">Take Quiz!</a>';
                     }
                 ?>
             </div>

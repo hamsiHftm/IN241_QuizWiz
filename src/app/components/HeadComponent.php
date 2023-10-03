@@ -3,8 +3,8 @@
 
 <!-- Adding bootstrap library -->
 <!-- TODO bootstrap not added properly-->
-<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.css">
-<script src="../../assets/bootstrap/js/bootstrap.js"></script>
+<link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
 
 <!-- Custom stylesheet -->
 <link rel="stylesheet" href="../../assets/css/quizWiz.css">
