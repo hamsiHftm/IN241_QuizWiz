@@ -85,5 +85,16 @@ class User
         ];
     }
 
+    public static function fromArray(array $data) {
+        // Create a new User object and set its properties from the array
+        $user = new self(
+            $data['id'],
+            $data['username'],
+            $data['firstname'],
+            $data['lastname'],
+            null
+        );
 
+        return $user;
+    }
 }

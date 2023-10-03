@@ -1,11 +1,6 @@
 <?php
-require_once '../controllers/LocalStorageController.php';
-$array_user = LocalStorageController::parseData(LocalStorageController::LOGGED_USER_DATA);
-
-$is_user_logged_in = false;
-if ($array_user !== null && array_key_exists("id", $array_user)) {
-    $is_user_logged_in = true;
-}
+require_once '../controllers/AuthController.php';
+$user = AuthController::getUser();
 ?>
 
 <header class="qw-header qw-blue-container">
@@ -21,14 +16,14 @@ if ($array_user !== null && array_key_exists("id", $array_user)) {
         <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo03">
             <ul class="navbar-nav">
                 <?php
-                if ($is_user_logged_in) {
+                if ($user !== null) {
                     echo '<li class="nav-item active">
                     <a class="header-link" href="../pages/quiz_start.php">Quiz</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="header-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown (Username)
-                    </a>
+                    <a class="header-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">'.
+                        $user->getUsername()
+                    .'</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">My Profile</a>
                         <div class="dropdown-divider"></div>
@@ -42,7 +37,7 @@ if ($array_user !== null && array_key_exists("id", $array_user)) {
                 </li>
 
                 <?php
-                if ($is_user_logged_in === false) {
+                if ($user === null) {
                     echo ' <li class="nav-item active">
                     <a class="header-link" href="../pages/RegisterPage.php">Register</a>
                 </li>

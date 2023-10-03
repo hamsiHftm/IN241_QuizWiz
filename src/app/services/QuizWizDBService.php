@@ -50,7 +50,7 @@ class QuizWizDBService
         return $this->pdo;
     }
 
-    public function registerUser($username, $password, $first_name = null, $last_name = null, $date_of_birth = null): bool
+    public function saveUser($username, $password, $first_name = null, $last_name = null, $date_of_birth = null): bool
     {
         try {
             // Prepare the SQL statement for inserting a new player
@@ -79,7 +79,7 @@ class QuizWizDBService
         }
     }
 
-    public function loginUser($username, $password): ?User
+    public function getUserByUsernameAndPassword($username, $password): ?User
     {
         try {
             // Prepare the SQL statement for get the player

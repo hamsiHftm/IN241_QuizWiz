@@ -1,6 +1,5 @@
 <?php
-require_once '../../config.php';
-require_once '../services/QuizWizDBService.php';
+require_once '../controllers/AuthController.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
     // Retrieve user-entered values
@@ -16,30 +15,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
         echo "<script>alert('Passwords do not match.');</script>";
     } else {
         // Passwords match, continue processing
-        // TODO --> Check, if it okey to conn the DB global or only where it's needed
-        $db_host = $GLOBALS['DB_HOST'];
-        $db_port = $GLOBALS['DB_PORT'];
-        $dbname = $GLOBALS['DB_NAME'];
-        $db_user = $GLOBALS['DB_USERNAME'];
-        $db_password = $GLOBALS['DB_PASSWORD'];
-        $db = new QuizWizDBService($db_host, $db_port, $dbname, $db_user, $db_password);
-
-        $result = $db->registerUser($username, $password, $firstname, $lastname, $dateOfBirth);
+        $result = AuthController::registerUser($username, $password, $firstname, $lastname, $dateOfBirth);
         if ($result) {
             echo "<script>
                             console.log('User registered successfully.');
-                            const success_elm = document.getElementById('success-alert');
-                            success_elm.classList.add('qw-show')
-                            success_elm.classList.remove('qw-hide')
+                            document.getElementById('success-alert').classList.add('qw-show');
+                            document.getElementById('success-alert').classList.remove('qw-hide');
                       </script>";
         } else {
             echo "<script>
                             console.log('User registration failed.');
-                            const failed_elem = document.getElementById('failed-alert');
-                            failed_elem.classList.add('qw-show')
-                            console.log('added')
-                            failed_elem.classList.remove('qw-hide')
-                            console.log('removed')
+                            document.getElementById('failed-alert').classList.add('qw-show')
+                            document.getElementById('failed-alert').classList.remove('qw-hide')
                       </script>";
         }
     }

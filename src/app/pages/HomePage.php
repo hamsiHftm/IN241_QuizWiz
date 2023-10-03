@@ -1,3 +1,10 @@
+<?php
+     require_once '../controllers/AuthController.php';
+    // Start the session if not already started
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,11 +19,9 @@
                 <p> Get ready to challenge your mind and expand your knowledge with our exciting quizzes. Start quizzing now and unlock your intellectual potential!</p>
 
                 <?php
-                    require_once '../controllers/LocalStorageController.php';
-                    $array_user = LocalStorageController::parseData(LocalStorageController::LOGGED_USER_DATA);
-
-                    if ($array_user !== null && array_key_exists("id", $array_user)) {
+                    if (AuthController::isLoggedIn()) {
                         echo '<a class="qw-red-button" href="quiz_start.php">Take Quiz!</a>';
+                        echo '<a class="qw-red-button" href="LogOutPage.php">Logout</a>';
                     }
                 ?>
             </div>
@@ -26,16 +31,4 @@
 </body>
 </html>
 
-<script>
-    var localStorageData = localStorage.getItem('<?php echo $array_user; ?>');
-    // Use AJAX to send the data to the server-side PHP script
-    $.ajax({
-        type: 'POST',
-        url: 'process_localstorage.php', // Replace with the actual path to your PHP script
-        data: { localStorageData: localStorageData },
-        success: function(response) {
-            console.log(response);
-        }
-    });
-</script>
 

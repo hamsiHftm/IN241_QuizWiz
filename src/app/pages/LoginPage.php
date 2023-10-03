@@ -1,23 +1,14 @@
 <?php
-require '../../config.php';
-require '../services/QuizWizDBService.php';
-require '../controllers/LocalStorageController.php';
+require '../controllers/AuthController.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
 
     // Retrieve user-entered values
     $username = $_POST["username"];
     $password = $_POST["password"];
-    $db_host = $GLOBALS['DB_HOST'];
-    $db_port = $GLOBALS['DB_PORT'];
-    $dbname = $GLOBALS['DB_NAME'];
-    $db_user = $GLOBALS['DB_USERNAME'];
-    $db_password = $GLOBALS['DB_PASSWORD'];
-    $db = new QuizWizDBService($db_host, $db_port, $dbname, $db_user, $db_password);
 
-    $user = $db->loginUser($username, $password);
+    $user = AuthController::loginUser($username, $password);
     if ($user !== null) {
-        LocalStorageController::storeData(LocalStorageController::LOGGED_USER_DATA, $user->toArray());
         echo "<script>
                        console.log('User logged-in successfully.');
                         window.location.href = 'HomePage.php';
