@@ -1,7 +1,6 @@
 <?php
 
-require_once '../../config.php';
-require_once '../services/QuizWizDBService.php';
+require_once 'DBController.php';
 
 class AuthController
 {
@@ -9,23 +8,18 @@ class AuthController
     {
         // Validate input (e.g., check if username is unique, etc.)
         // You can add your validation logic here
+        // TODO check, if any validation needed here
 
-        // Assuming $db is an instance of QuizWizDBService
-        $db = new QuizWizDBService($GLOBALS['DB_HOST'], $GLOBALS['DB_PORT'], $GLOBALS['DB_NAME'], $GLOBALS['DB_USERNAME'], $GLOBALS['DB_PASSWORD']);
-        $db->connect();
-        // Attempt to register the user
-        $result = $db->saveUser($username, $password, $firstname, $lastname, $dateOfBirth);
-        $db->closeConnection();
-        return $result;
+        // creating user in DB
+        $dbController = new DBController();
+        return $dbController->registerNewUser($username, $password, $firstname, $lastname, $dateOfBirth);
     }
 
     public static function loginUser($username, $password): bool
     {
         // Verify user credentials
-        $db = new QuizWizDBService($GLOBALS['DB_HOST'], $GLOBALS['DB_PORT'], $GLOBALS['DB_NAME'], $GLOBALS['DB_USERNAME'], $GLOBALS['DB_PASSWORD']);
-        $db->connect();
-        $user = $db->getUserByUsernameAndPassword($username, $password);
-        $db->closeConnection();
+        $dbController = new DBController();
+        $user = $dbController->getUserForLogin($username, $password);
         if ($user !== null) {
             // Start the session if not already started
             if (session_status() === PHP_SESSION_NONE) {

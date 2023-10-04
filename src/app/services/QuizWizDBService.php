@@ -93,6 +93,7 @@ class QuizWizDBService
 
             if ($result !== false && password_verify($password, $result['password'])) {
                 // User found, verify password
+                // toDO create user instance in DBController and deliver as array
                 return new User(
                     $result['id'],
                     $result['username'],

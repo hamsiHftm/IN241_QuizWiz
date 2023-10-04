@@ -15,6 +15,38 @@ class DBController {
         $this->dbService = new QuizWizDBService($GLOBALS['DB_HOST'], $GLOBALS['DB_PORT'], $GLOBALS['DB_NAME'], $GLOBALS['DB_USERNAME'], $GLOBALS['DB_PASSWORD']);
     }
 
+    public function registerNewUser($username, $password, $firstname, $lastname, $dateOfBirth): bool
+    {
+        $isUserSaved = false;
+        try {
+            // connecting to DB
+            $this->dbService->connect();
+            $isUserSaved = $this->dbService->saveUser($username, $password, $firstname, $lastname, $dateOfBirth);
+            $this->dbService->closeConnection();
+        } catch (PDOException $e) {
+            // Handle any database errors here
+            echo "Error: " . $e->getMessage();
+            $isUserSaved = false;
+        }
+        return $isUserSaved;
+    }
+
+    public function getUserForLogin($username, $password): ?User
+    {
+        $user = null;
+        try {
+            // connecting to DB
+            $this->dbService->connect();
+            $user = $this->dbService->getUserByUsernameAndPassword($username, $password);
+            $this->dbService->closeConnection();
+        } catch (PDOException $e) {
+            // Handle any database errors here
+            echo "Error: " . $e->getMessage();
+            $isUserSaved = false;
+        }
+        return $user;
+    }
+
     public function saveQuizResult($quiz, $user): bool
     {
         $isQuizSaved = false;
