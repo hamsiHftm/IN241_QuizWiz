@@ -2,7 +2,13 @@
 require_once '../models/Quiz.php';
 require_once '../models/Category.php';
 require_once '../models/Question.php';
+require_once '../controllers/DBController.php';
+require_once '../controllers/AuthController.php';
+
 session_start();
+
+// Retrieving current user
+$user = AuthController::getUser();
 
 // Retrieving the result for last question to calculate the  score
 $isAnswerCorrect = 0;
@@ -23,6 +29,21 @@ if (isset($_SESSION['quiz'])) {
         }
     }
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $dbController = new DBController();
+
+    $success = $dbController->saveQuizResult($quiz, $user);
+    if ($success) {
+        echo "<script>
+                       console.log('Quiz Result Saved!!!');
+                        window.location.href = 'HomePage.php';
+                    </script>";
+    } else {
+        echo "<script>alert('Quiz Result cannot be saved');</script>";
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,13 +57,8 @@ if (isset($_SESSION['quiz'])) {
         <div>
             <h1>Scoreboard</h1>
             <div>
-                <span>Category: <strong><?php
-                        if($quiz && is_object($quiz->getCategory())) {
-                            echo $quiz->getCategory()->getName();
-                        }
-                        ?></strong></span>
+                <span>Category: <strong><?php echo $quiz->getCategory()->getName(); ?></strong></span>
             </div>
-
             <div>
                 <span>Difficulty: <strong><?php echo $quiz->getDifficulty(); ?></strong></span>
             </div>

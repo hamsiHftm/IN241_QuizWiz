@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS Category (
 CREATE TABLE IF NOT EXISTS Quiz (
   id SERIAL PRIMARY KEY,
   player_id INT REFERENCES Player(id),
-  difficulty VARCHAR(10) CHECK (difficulty IN ('EASY', 'MEDIUM', 'HARD', 'MIXED')),
+  difficulty VARCHAR(10) CHECK (difficulty IN ('easy', 'medium', 'hard', 'mixed')),
   category_id INT REFERENCES Category(id),
   total_score INT NOT NULL
 );

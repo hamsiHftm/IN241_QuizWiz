@@ -12,10 +12,10 @@ class AuthController
 
         // Assuming $db is an instance of QuizWizDBService
         $db = new QuizWizDBService($GLOBALS['DB_HOST'], $GLOBALS['DB_PORT'], $GLOBALS['DB_NAME'], $GLOBALS['DB_USERNAME'], $GLOBALS['DB_PASSWORD']);
-
+        $db->connect();
         // Attempt to register the user
         $result = $db->saveUser($username, $password, $firstname, $lastname, $dateOfBirth);
-
+        $db->closeConnection();
         return $result;
     }
 
@@ -23,8 +23,9 @@ class AuthController
     {
         // Verify user credentials
         $db = new QuizWizDBService($GLOBALS['DB_HOST'], $GLOBALS['DB_PORT'], $GLOBALS['DB_NAME'], $GLOBALS['DB_USERNAME'], $GLOBALS['DB_PASSWORD']);
+        $db->connect();
         $user = $db->getUserByUsernameAndPassword($username, $password);
-
+        $db->closeConnection();
         if ($user !== null) {
             // Start the session if not already started
             if (session_status() === PHP_SESSION_NONE) {

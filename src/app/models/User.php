@@ -83,6 +83,10 @@ class User
         $this->nrOfPlayedGames = $nrOfPlayedGames;
     }
 
+    public function getDBId(): int {
+        return $this->dbId;
+    }
+
     public function toArray()
     {
         return [

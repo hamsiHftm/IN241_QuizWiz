@@ -1,7 +1,7 @@
 <?php
 
-require '../models/User.php';
-
+require_once '../models/User.php';
+require_once '../models/Category.php';
 /*
  * Contains all the DB functions
  *
@@ -28,11 +28,9 @@ class QuizWizDBService
         $this->dbname = $dbname;
         $this->username = $username;
         $this->password = $password;
-
-        $this->connect();
     }
 
-    private function connect()
+    public function connect(): void
     {
         $dsn = "pgsql:host={$this->host};port={$this->port};dbname={$this->dbname};user={$this->username};password={$this->password}";
 
@@ -45,9 +43,9 @@ class QuizWizDBService
         }
     }
 
-    public function getConnection()
+    public function closeConnection(): void
     {
-        return $this->pdo;
+        $this->pdo = null; // Set the PDO instance to null, closing the connection
     }
 
     public function saveUser($username, $password, $first_name = null, $last_name = null, $date_of_birth = null): bool
@@ -109,6 +107,72 @@ class QuizWizDBService
         } catch (PDOException $e) {
             // Handle any database errors and return false to indicate failure
             return null;
+        }
+    }
+
+    public function saveQuiz($playerId, $difficulty, $categoryId, $totalScore): bool
+    {
+        try {
+            // Prepare the SQL statement for inserting a new player
+            $stmt = $this->pdo->prepare("INSERT INTO Quiz (player_id, difficulty, category_id, total_score) 
+                                        VALUES (:playerId, :difficulty, :categoryId, :totalScore)");
+
+            // Bind parameters
+            $stmt->bindParam(':playerId', $playerId, PDO::PARAM_INT);
+            $stmt->bindParam(':difficulty', $difficulty, PDO::PARAM_STR);
+            $stmt->bindParam(':categoryId', $categoryId, PDO::PARAM_INT);
+            $stmt->bindParam(':totalScore', $totalScore, PDO::PARAM_INT);
+
+            // Execute the statement to insert the record
+            $stmt->execute();
+
+            return true; // Record inserted successfully
+        } catch (PDOException $e) {
+            // Handle any database errors here
+            echo "Error: " . $e->getMessage();
+            return false; // Record insertion failed
+        }
+    }
+
+    public function saveCategory($identifier, $name): bool
+    {
+        try {
+            // Prepare the SQL statement for inserting a new player
+            $stmt = $this->pdo->prepare("INSERT INTO Category (identifier, name) VALUES (:identifier, :name)");
+
+            // Bind parameters
+            $stmt->bindParam(':identifier', $identifier, PDO::PARAM_STR);
+            $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+
+            // Execute the statement to insert the record
+            $stmt->execute();
+
+            return true; // Record inserted successfully
+        } catch (PDOException $e) {
+            // Handle any database errors here
+            echo "Error: " . $e->getMessage();
+            return false; // Record insertion failed
+        }
+    }
+
+    public function getCategoryByIdentifierAndName($identifier, $name): ?array {
+        try {
+            // Prepare the SQL statement for get the player
+            $stmt = $this->pdo->prepare("SELECT * FROM Category where identifier = :identifier and name = :name");
+
+            // Bind the parameters to the prepared statement
+            $stmt->bindParam(':identifier', $identifier, PDO::PARAM_STR);
+            $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+
+            // Execute the prepared statement
+            $stmt->execute();
+
+            // Fetch the result (assuming there's only one matching record)
+            return $stmt->fetch(PDO::FETCH_ASSOC); // Return the category record or false if not found
+        } catch (PDOException $e) {
+            // Handle any database errors here
+            echo "Error: " . $e->getMessage();
+            return null; // Query failed
         }
     }
 }
