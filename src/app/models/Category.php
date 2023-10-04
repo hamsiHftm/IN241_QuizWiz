@@ -1,5 +1,6 @@
 <?php
 
+// TODO save category while generaating dropdown in quizStart
 class Category
 {
     private $id;

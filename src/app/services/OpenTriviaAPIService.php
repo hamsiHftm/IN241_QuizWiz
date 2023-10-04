@@ -119,7 +119,7 @@ class OpenTriviaAPIService
     }
 
     private function extract_quiz_from_response($category, $difficulty, $questionType, $results) {
-        $quiz = new Quiz($category, $questionType);
+        $quiz = new Quiz($category, $difficulty, $questionType);
         foreach ($results as $result) {
             $question = new Question($result['question'], $result['difficulty']);
             $question->addAnswer(new Answer($result['correct_answer'], true));

@@ -6,7 +6,7 @@
     require_once '../services/OpenTriviaAPIService.php';
 
 $api_base_url = $GLOBALS['API_BASE_URL'];
-$triviaAPI = new OpenTriviaAPIService($api_base_url, null); # TODO make instanz Varaible
+$triviaAPI = new OpenTriviaAPIService($api_base_url, null);
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $quiz = $triviaAPI->getQuestions($GLOBALS['NR_OF_QUESTIONS'], $selectedCategory, $selectedDifficulty, $selectedType);
         if ($quiz) {
+            $quiz->setPlayingMode(true);
             $_SESSION['quiz'] = $quiz;
             header("Location: QuizQuestionPage.php?nr=1&score=0");
         }

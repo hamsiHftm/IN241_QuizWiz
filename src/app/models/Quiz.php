@@ -6,10 +6,13 @@ class Quiz
     private $questions;
     private $questionType;
     private $currentPoints;
+    private $isPlaying;
+    private $difficulty;
 
-    public function __construct($category, $questionType)
+    public function __construct($category, $difficulty, $questionType)
     {
         $this->category = $category;
+        $this->difficulty = $difficulty;
         $this->questionType = $questionType;
         $this->currentPoints = 0;
         $this->questions = array();
@@ -23,6 +26,10 @@ class Quiz
     public function getQuestionType()
     {
         return $this->questionType;
+    }
+
+    public function getDifficulty() {
+        return $this->difficulty;
     }
 
     public function getCurrentPoints(): int
@@ -40,13 +47,23 @@ class Quiz
         $this->questions[] = $question;
     }
 
+    public function setPlayingMode($isPlaying):void {
+        $this->isPlaying = $isPlaying;
+    }
+
+    public function getPlayingMode(): bool {
+        return $this->isPlaying;
+    }
+
     public function addPoints($difficulty) {
-        if ($difficulty === 'easy') {
-            $this->currentPoints += 250;
-        } elseif ($difficulty === 'medium') {
-            $this->currentPoints += 500;
-        } elseif ($difficulty === 'hard') {
-            $this->currentPoints += 1000;
+        if ($this->isPlaying) {
+            if ($difficulty === 'easy') {
+                $this->currentPoints += 250;
+            } elseif ($difficulty === 'medium') {
+                $this->currentPoints += 500;
+            } elseif ($difficulty === 'hard') {
+                $this->currentPoints += 1000;
+            }
         }
     }
 

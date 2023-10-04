@@ -1,6 +1,14 @@
 <?php
 require_once '../controllers/AuthController.php';
 $user = AuthController::getUser();
+
+$isPlaying = false;
+if (isset($_SESSION['quiz'])) {
+    $quiz = $_SESSION['quiz'];
+    if ($quiz instanceof Quiz) {
+        $isPlaying = $quiz->getPlayingMode();
+    }
+}
 ?>
 
 <header class="qw-header qw-blue-container">
@@ -16,7 +24,7 @@ $user = AuthController::getUser();
         <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo03">
             <ul class="navbar-nav">
                 <?php
-                if ($user !== null) {
+                if ($user !== null and !$isPlaying) {
                     echo '<li class="nav-item active">
                     <a class="header-link" href="../pages/QuizStartPage.php">Quiz</a>
                 </li>
@@ -32,12 +40,15 @@ $user = AuthController::getUser();
                 </li>';
                 }
                 ?>
-                <li class="nav-item">
-                    <a class="header-link" href="../pages/AboutUsPage.php">About us</a>
-                </li>
-
                 <?php
-                if ($user === null) {
+                if (!$isPlaying) {
+                    echo '<li class="nav-item">
+                    <a class="header-link" href="../pages/AboutUsPage.php">About us</a>
+                </li>';
+                }
+                ?>
+                <?php
+                if ($user === null and !$isPlaying) {
                     echo ' <li class="nav-item active">
                     <a class="header-link" href="../pages/RegisterPage.php">Register</a>
                 </li>
