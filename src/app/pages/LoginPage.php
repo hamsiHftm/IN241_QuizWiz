@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
     $password = $_POST["password"];
 
     $user = AuthController::loginUser($username, $password);
-    if ($user !== null) {
+    if ($user) {
         echo "<script>
                        console.log('User logged-in successfully.');
                         window.location.href = 'HomePage.php';
