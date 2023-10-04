@@ -11,11 +11,13 @@ $triviaAPI = new OpenTriviaAPIService($api_base_url, null);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submit'])) {
-        $selectedCategory = $_POST['categorySel'];
+        $selectedCategoryValue = explode('-', $_POST['categorySel']);
+        $selectedCategoryID = (int) $selectedCategoryValue[0];
+        $selectedCategoryName =  trim($selectedCategoryValue[1]);
         $selectedDifficulty = $_POST['difficulty'];
         $selectedType = $_POST['type'];
 
-        $quiz = $triviaAPI->getQuestions($GLOBALS['NR_OF_QUESTIONS'], $selectedCategory, $selectedDifficulty, $selectedType);
+        $quiz = $triviaAPI->getQuestions($GLOBALS['NR_OF_QUESTIONS'], $selectedCategoryID, $selectedCategoryName, $selectedDifficulty, $selectedType);
         if ($quiz) {
             $quiz->setPlayingMode(true);
             $_SESSION['quiz'] = $quiz;
@@ -56,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ?>
                 <select name="categorySel" id="categorySel" class="form-select qw-form-select">
                     <?php foreach ($categories as $category) { ?>
-                        <option value="<?php echo $category['id']; ?>">
+                        <option value="<?php echo $category['id']. '-' .$category['name']; ?>">
                             <?php echo $category['name']; ?>
                         </option>
                     <?php } ?>

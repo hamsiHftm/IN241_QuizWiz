@@ -6,10 +6,10 @@
  * Includes methods to retrieve and interact with data from OpenTrivia
  * 1. getCategories --> get all the quiz topic
  */
-
-include __DIR__ . '/../models/Quiz.php';
-include __DIR__ . '/../models/Question.php';
-include __DIR__ . '/../models/Answer.php';
+require_once '../models/Quiz.php';
+require_once '../models/Question.php';
+require_once '../models/Answer.php';
+require_once '../models/Category.php';
 
 class OpenTriviaAPIService
 {
@@ -65,11 +65,12 @@ class OpenTriviaAPIService
         return [];
     }
 
-    public function getQuestions($amount, $category, $difficulty, $questionType) {
+    public function getQuestions($amount, $categoryID, $categoryName, $difficulty, $questionType): ?Quiz
+    {
         $url = $this->baseURL . '/api.php';
         $params = array(
             'amount' => $amount,
-            'category' => $category
+            'category' => $categoryID
         );
 
         if (!empty($this->token)) {
@@ -97,7 +98,7 @@ class OpenTriviaAPIService
             $response_code = $data['response_code'];
             switch ($response_code) {
                 case 0:
-                    $quiz = $this->extract_quiz_from_response($category, $difficulty, $questionType, $data['results']);
+                    $quiz = $this->extract_quiz_from_response($categoryID, $categoryName, $difficulty, $questionType, $data['results']);
                     break;
                 case 1:
                     # TODO return notification to change the difficult to other or chose mixed,
@@ -118,8 +119,9 @@ class OpenTriviaAPIService
         return $quiz;
     }
 
-    private function extract_quiz_from_response($category, $difficulty, $questionType, $results) {
-        $quiz = new Quiz($category, $difficulty, $questionType);
+    private function extract_quiz_from_response($categoryID, $categoryName, $difficulty, $questionType, $results): Quiz
+    {
+        $quiz = new Quiz(new Category($categoryID, $categoryName), $difficulty, $questionType);
         foreach ($results as $result) {
             $question = new Question($result['question'], $result['difficulty']);
             $question->addAnswer(new Answer($result['correct_answer'], true));
