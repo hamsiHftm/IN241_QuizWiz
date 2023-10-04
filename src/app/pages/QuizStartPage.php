@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $quiz = $triviaAPI->getQuestions($GLOBALS['NR_OF_QUESTIONS'], $selectedCategory, $selectedDifficulty, $selectedType);
         if ($quiz) {
             $_SESSION['quiz'] = $quiz;
-            header("Location: QuizQuestionPage.php?nr=1");
+            header("Location: QuizQuestionPage.php?nr=1&score=0");
         }
         exit;
     }

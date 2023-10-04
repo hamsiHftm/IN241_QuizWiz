@@ -6,20 +6,33 @@ session_start();
 
 // TODO prvent from going back
 // TODO timer (nice to have)
-// Get the value of param1 from the query parameter
+// Retrieving the current question nr from params
 $questionNr = null;
 if (isset($_GET['nr'])) {
     $questionNr = intval($_GET['nr']);
 }
 
+// Retrieving the result for previous question to calculate the current score
+$isAnswerCorrect = 0;
+if (isset($_GET['score'])) {
+    $isAnswerCorrect = intval($_GET['score']);
+}
+
 $currentQuestion = null;
-// Check if the quiz object exists in the session
+$quiz = null;
+
+// Check if the quiz object exists in the session and retrieving quiz from the session
 if (isset($_SESSION['quiz'])) {
     $quiz = $_SESSION['quiz'];
 
+    // setting current question from quiz using question-Nr retrieved from params
     if ($quiz instanceof Quiz) {
         $currentQuestion = $quiz->getQuestions()[$questionNr - 1];
-        $quiz->addPoints($currentQuestion->getQuestionDifficulty());
+
+        // calculating score from previous question
+        if ($questionNr > 1 && $isAnswerCorrect === 1) {
+            $quiz->addPoints($quiz->getQuestions()[$questionNr - 2]->getQuestionDifficulty());
+        }
     }
 }
 ?>
@@ -62,9 +75,9 @@ if (isset($_SESSION['quiz'])) {
             </div>
         </div>
 
+        <!-- button and score blocks -->
         <div class="qw-question-score-container d-flex justify-content-between">
             <div class="qw-score d-flex align-items-center justify-content-center">
-                <!-- TODO points will caluclate always -->
                 <span>Current Score: <strong><?php echo $quiz->getCurrentPoints()?></strong></span>
             </div>
 
@@ -80,10 +93,11 @@ if (isset($_SESSION['quiz'])) {
 
     </div>
     <script>
-        // add styling when a answer is selected
+        // add styling when answer is selected, which will be used for evaluating the answer
         function selectAnswer(curr_element) {
             let elements = document.getElementsByClassName("qw-option");
             for(let i = 0; elements.length > i; i++) {
+                // To prevent clicking after evaluation.
                 if (elements[i].dataset.evaluated === 'true') {
                     break;
                 }
@@ -106,7 +120,7 @@ if (isset($_SESSION['quiz'])) {
                 } else {
                     sel_elm[0].classList.add('qw-option-wrong');
                 }
-                // Find and highlight the correct answer
+                // Find and highlight the correct answer, if the user selected it wrong
                 let options = document.getElementsByClassName("qw-option");
                 for (let i = 0; i < options.length; i++) {
                     if (!is_correct && options[i].dataset.correct === "1") {
@@ -114,7 +128,9 @@ if (isset($_SESSION['quiz'])) {
                     }
                     // Set the evaluated attribute for all options
                     options[i].dataset.evaluated = "true";
+                    options[i].dataset.isCorrect= is_correct.toString();
                 }
+                // hiding check button and showing next button
                 btn_elm.style.display = "none";
                 document.getElementById('next-question-btn').style.display = 'block';
                 document.getElementById('solution-alert').style.display = 'none';
@@ -123,6 +139,7 @@ if (isset($_SESSION['quiz'])) {
             }
         }
 
+        // navigating to next question
         function go_to_next_question() {
             var urlParams = new URLSearchParams(window.location.search);
             var quizNr = parseInt(urlParams.get('nr')) || 1; // Default to 1 if nr is not present or not a valid number
@@ -130,12 +147,21 @@ if (isset($_SESSION['quiz'])) {
             // Increment the quiz number
             quizNr++;
 
+            // setting header params score
+            // if the user evaluates correctly then the score = 1 otherwise score = 0
+            let is_correct = 0;
+            let option = document.getElementsByClassName("qw-option")[0];
+            if (option.dataset.isCorrect === 'true') {
+                is_correct = 1
+            }
+
             // If the quiz number reaches 11, reset it to 1
             if (quizNr > 10) {
-                window.location.href = 'ScorePage.php';
+                // adding score params in scorePage to calculate the last question result
+                window.location.href = 'ScorePage.php?score=' + is_correct;
             } else {
                 // Reload the page with the updated quiz number
-                window.location.href = 'QuizQuestionPage.php?nr=' + quizNr;
+                window.location.href = 'QuizQuestionPage.php?nr=' + quizNr + '&score=' + is_correct;
             }
         }
     </script>
