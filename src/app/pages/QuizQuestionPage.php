@@ -1,8 +1,12 @@
 <?php
+// Start the session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once '../models/Quiz.php';
 require_once '../models/Answer.php';
 require_once '../models/Question.php';
-session_start();
 
 // TODO prvent from going back
 // TODO timer (nice to have)
