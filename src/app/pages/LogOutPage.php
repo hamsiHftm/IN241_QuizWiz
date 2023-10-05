@@ -7,4 +7,4 @@ AuthController::logoutUser();
 // Redirect the user to a login or home page
 header('Location: HomePage.php');
 exit();
-?>
+

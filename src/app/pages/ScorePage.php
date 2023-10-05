@@ -1,11 +1,14 @@
 <?php
+// Start the session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once '../models/Quiz.php';
 require_once '../models/Category.php';
 require_once '../models/Question.php';
 require_once '../controllers/DBController.php';
 require_once '../controllers/AuthController.php';
-
-session_start();
 
 // Retrieving current user
 $user = AuthController::getUser();
@@ -35,6 +38,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $success = $dbController->saveQuizResult($quiz, $user);
     if ($success) {
+
+        // deleting quiz instance, when quiz result saved
+        if (isset($_SESSION['quiz'])) {
+            unset($_SESSION['quiz']); // This line removes the 'quiz' session variable
+        }
         echo "<script>
                        console.log('Quiz Result Saved!!!');
                         window.location.href = 'HomePage.php';

@@ -1,7 +1,10 @@
 <?php
 require_once '../controllers/AuthController.php';
+
+// retrieving the logged-in user to adjust the navigation-bar
 $user = AuthController::getUser();
 
+// retrieving the playingMode from Quiz-Object to hide the navigation-bar
 $isPlaying = false;
 if (isset($_SESSION['quiz'])) {
     $quiz = $_SESSION['quiz'];
@@ -24,36 +27,32 @@ if (isset($_SESSION['quiz'])) {
         <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo03">
             <ul class="navbar-nav">
                 <?php
-                if ($user !== null and !$isPlaying) {
-                    echo '<li class="nav-item active">
+                if (!$isPlaying) {
+                    if ($user) {
+                        echo '<li class="nav-item active">
                     <a class="header-link" href="../pages/QuizStartPage.php">Quiz</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="header-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">' .
-                        $user->getUsername()
-                    .'</a>
+                            $user->getUsername()
+                            . '</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="../pages/ProfilePage.php">My Profile</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="../pages/LogOutPage.php">Logout</a>
                     </div>
                 </li>';
-                }
-                ?>
-                <?php
-                if (!$isPlaying) {
-                    echo '<li class="nav-item">
-                    <a class="header-link" href="../pages/AboutUsPage.php">About us</a>
-                </li>';
-                }
-                ?>
-                <?php
-                if ($user === null and !$isPlaying) {
-                    echo ' <li class="nav-item active">
+                    } else {
+                        echo ' <li class="nav-item active">
                     <a class="header-link" href="../pages/RegisterPage.php">Register</a>
                 </li>
                 <li class="nav-item active">
                     <a class="header-link" href="../pages/LoginPage.php">Login</a>
+                </li>';
+                    }
+
+                    echo '<li class="nav-item">
+                    <a class="header-link" href="../pages/AboutUsPage.php">About us</a>
                 </li>';
                 }
                 ?>

@@ -1,4 +1,5 @@
-    <div id="loader" class="qw-loader-container d-flex d-flex align-items-center justify-content-center">
-        <div class="qw-spinner spinner-border" role="status">
-        </div>
+<!-- TODO It's not in the Use, maybe need to remove
+<div id="loader" class="qw-loader-container d-flex d-flex align-items-center justify-content-center">
+    <div class="qw-spinner spinner-border" role="status">
     </div>
+</div>
