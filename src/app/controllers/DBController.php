@@ -42,7 +42,7 @@ class DBController {
         } catch (PDOException $e) {
             // Handle any database errors here
             echo "Error: " . $e->getMessage();
-            $user = null;
+            $isUserSaved = false;
         }
         return $user;
     }
@@ -77,21 +77,6 @@ class DBController {
         return $isQuizSaved;
     }
 
-    public function getTopScoredQuizRecords($limit = 10): ?array
-    {
-        $records = null;
-        try {
-            // connecting to DB
-            $this->dbService->connect();
-            $records = $this->dbService->getQuizRecordsInDecOrderScore($limit);
-            $this->dbService->closeConnection();
-        } catch (PDOException $e) {
-            // Handle any database errors here
-            echo "Error: " . $e->getMessage();
-            $records = null;
-        }
-        return $records;
-    }
 
 
 }
