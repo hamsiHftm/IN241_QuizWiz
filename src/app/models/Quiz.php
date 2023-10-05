@@ -3,6 +3,7 @@
 require_once 'Difficulty.php';
 require_once 'QuestionType.php';
 require_once 'Category.php';
+
 class Quiz
 {
     private ?Category $category;
@@ -41,7 +42,8 @@ class Quiz
         return $this->currentPoints;
     }
 
-    public function getPlayingMode(): bool {
+    public function getPlayingMode(): bool
+    {
         return $this->isPlaying;
     }
 
@@ -56,11 +58,13 @@ class Quiz
         $this->questions[] = $question;
     }
 
-    public function setCurrentPoints($currentPoints): void {
+    public function setCurrentPoints($currentPoints): void
+    {
         $this->currentPoints = $currentPoints;
     }
 
-    public function setPlayingMode($isPlaying):void {
+    public function setPlayingMode($isPlaying): void
+    {
         $this->isPlaying = $isPlaying;
     }
 
@@ -111,7 +115,6 @@ class Quiz
 
         return $quiz;
     }
-
 
 
 }

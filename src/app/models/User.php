@@ -21,7 +21,8 @@ class User
         $this->nrOfPlayedGames = null;
     }
 
-    public function getDBId(): int {
+    public function getDBId(): int
+    {
         return $this->dbId;
     }
 
@@ -55,15 +56,18 @@ class User
         return $this->nrOfPlayedGames;
     }
 
-    public function setDBId($dbId): void {
+    public function setDBId($dbId): void
+    {
         $this->dbId = $dbId;
     }
 
-    public function setFirstname($firstname): void {
+    public function setFirstname($firstname): void
+    {
         $this->firstname = $firstname;
     }
 
-    public function setLastname($lastname): void {
+    public function setLastname($lastname): void
+    {
         $this->lastname = $lastname;
     }
 
