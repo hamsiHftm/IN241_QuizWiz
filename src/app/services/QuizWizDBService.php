@@ -176,4 +176,33 @@ class QuizWizDBService
             return null; // Query failed
         }
     }
+
+    public function getQuizRecordsInDecOrderScore($limit) {
+        try {
+            // Prepare the SQL statement to retrieve the top quiz records
+            $stmt = $this->pdo->prepare("
+            SELECT Quiz.id, Player.username, Category.name, Quiz.difficulty, Quiz.total_score
+            FROM Quiz
+            INNER JOIN Player ON Quiz.player_id = Player.id
+            INNER JOIN Category ON Quiz.category_id = Category.id
+            ORDER BY Quiz.total_score DESC
+            LIMIT :limit
+        ");
+
+            // Bind the parameter for the LIMIT clause
+            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+            // Execute the prepared statement
+            $stmt->execute();
+
+            // Fetch the results as an associative array
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $results;
+        } catch (PDOException $e) {
+            // Handle any database errors here
+            echo "Error: " . $e->getMessage();
+            return null; // Query failed
+        }
+    }
 }

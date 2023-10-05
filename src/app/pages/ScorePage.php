@@ -1,14 +1,14 @@
 <?php
-// Start the session if not already started
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
 require_once '../models/Quiz.php';
 require_once '../models/Category.php';
 require_once '../models/Question.php';
 require_once '../controllers/DBController.php';
 require_once '../controllers/AuthController.php';
+
+// Start the session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Retrieving current user
 $user = AuthController::getUser();

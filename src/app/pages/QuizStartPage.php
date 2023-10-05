@@ -1,13 +1,13 @@
 <?php
-// Start the session if not already started
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
 require_once '../../config.php';
 require_once '../models/Difficulty.php';
 require_once '../models/QuestionType.php';
 require_once '../services/OpenTriviaAPIService.php';
+
+// Start the session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 $api_base_url = $GLOBALS['API_BASE_URL'];
 $triviaAPI = new OpenTriviaAPIService($api_base_url, null);
