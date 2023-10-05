@@ -15,7 +15,7 @@ $oldPassword = $_POST["oldPassword"];
 $newPassword = $_POST["newPassword"];
 $repeatNewPassword = $_POST["repeatNewPassword"];
 
-// checking if newPassword and repeatPassword are same
+// checking if newPassword and repeatPassword are equal
 if ($newPassword == $repeatNewPassword) {
     // changing password in DB
     $dbController = new DBController();
