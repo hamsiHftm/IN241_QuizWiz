@@ -2,15 +2,14 @@
 
 require_once '../../config.php';
 require_once '../services/OpenTriviaAPIService.php';
-require_once '../models/Category.php';
-
 
 class APIController
 {
     private OpenTriviaAPIService $apiService;
     private int $numberOfQuestion;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->apiService = new OpenTriviaAPIService($GLOBALS['API_BASE_URL']);
         $this->numberOfQuestion = $GLOBALS['NR_OF_QUESTIONS'];
     }
@@ -46,16 +45,16 @@ class APIController
     /**
      * Generate a quiz and its questions from API results and store it in the session.
      *
-     * @param int    $categoryId    The ID of the category for the quiz.
-     * @param string $categoryName  The name of the category for the quiz.
-     * @param string $difficulty    The difficulty level of the quiz.
-     * @param string $type          The type of questions in the quiz.
+     * @param int $categoryId The ID of the category for the quiz.
+     * @param string $categoryName The name of the category for the quiz.
+     * @param string $difficulty The difficulty level of the quiz.
+     * @param string $type The type of questions in the quiz.
      *
      * @return bool|null True if the quiz was successfully generated and stored in the session, false on failure, null for exceptions.
      */
     public function generateQuizAndQuestions(int $categoryId, string $categoryName, string $difficulty, string $type): ?bool
     {
-       try {
+        try {
             $questionResults = $this->apiService->getQuestions($this->numberOfQuestion, $categoryId, $difficulty, $type);
 
             if (!empty($questionResults)) {
@@ -81,7 +80,7 @@ class APIController
             }
 
             return true;
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
     }
@@ -117,6 +116,7 @@ class APIController
     }
 
     /**
+     * TODO remove when its not needed
      * Retrieve categories from the session as objects.
      *
      * @return array|null An array of Category objects if categories are found in the session, or null if not found.

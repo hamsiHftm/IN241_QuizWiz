@@ -1,17 +1,14 @@
 <?php
 
 require_once '../../config.php';
-
 require_once '../services/QuizWizDBService.php';
 
-require_once '../models/Quiz.php';
-require_once '../models/Category.php';
-require_once '../models/User.php';
-
-class DBController {
+class DBController
+{
     private QuizWizDBService $dbService;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->dbService = new QuizWizDBService($GLOBALS['DB_HOST'], $GLOBALS['DB_PORT'], $GLOBALS['DB_NAME'], $GLOBALS['DB_USERNAME'], $GLOBALS['DB_PASSWORD']);
     }
 
@@ -22,11 +19,11 @@ class DBController {
      * It first checks if a user with the same username already exists in the database. If a user exists, it returns an error message.
      * If the username is unique, it attempts to save the user's information to the database.
      *
-     * @param string $username     The username of the new user.
-     * @param string $password     The password of the new user.
-     * @param string $firstname    The first name of the new user.
-     * @param string $lastname     The last name of the new user.
-     * @param string $dateOfBirth  The date of birth of the new user.
+     * @param string $username The username of the new user.
+     * @param string $password The password of the new user.
+     * @param string $firstname The first name of the new user.
+     * @param string $lastname The last name of the new user.
+     * @param string $dateOfBirth The date of birth of the new user.
      *
      * @return array An associative array containing the result of the registration attempt.
      *               - 'success': A boolean indicating whether the registration was successful.
@@ -106,15 +103,24 @@ class DBController {
                 return ['user' => null, 'message' => 'Wrong password!'];
             }
         } catch (PDOException $e) {
-            return ['user' => null, 'message' => 'Failed! Exception: '. $e->getMessage()];
+            return ['user' => null, 'message' => 'Failed! Exception: ' . $e->getMessage()];
         } finally {
             $this->dbService->closeConnection();
         }
     }
 
+    /**
+     * Save a Quiz result in the database.
+     *
+     * This method saves the result of a Quiz, including the user's score and category information.
+     *
+     * @param Quiz $quiz The Quiz object containing the result to be saved.
+     * @param User $user The User object representing the user who played the Quiz.
+     *
+     * @return bool True if the Quiz result was successfully saved, false otherwise.
+     */
     public function saveQuizResult($quiz, $user): bool
     {
-        // TODO Comment and cancel button as well
         $isQuizSaved = false;
         try {
             // connecting to DB
@@ -131,12 +137,9 @@ class DBController {
                     $categoryId = $result['id'];
                 }
             }
-
             // saving quiz
             $isQuizSaved = $this->dbService->saveQuiz($user->getDBId(), $quiz->getDifficulty()->value, $categoryId, $quiz->getCurrentPoints());
         } catch (PDOException $e) {
-            // Handle any database errors here
-            echo "Error: " . $e->getMessage();
             $isQuizSaved = false;
         } finally {
             $this->dbService->closeConnection();
@@ -186,7 +189,8 @@ class DBController {
      *
      * @return User|null The updated User object with quiz records, or null in case of an error.
      */
-    public function updateUserQuizInfos(User $user): ?User {
+    public function updateUserQuizInfos(User $user): ?User
+    {
         try {
             // connecting to DB
             $this->dbService->connect();
@@ -211,7 +215,7 @@ class DBController {
             return $user;
         } catch (PDOException $e) {
             return $user;
-        }  finally {
+        } finally {
             $this->dbService->closeConnection();
         }
     }
@@ -251,7 +255,7 @@ class DBController {
             }
         } catch (PDOException $e) {
             return ['success' => false, 'message' => 'User update failed!. Exception: ' . $e->getMessage()];
-        }  finally {
+        } finally {
             $this->dbService->closeConnection();
         }
     }
@@ -301,14 +305,15 @@ class DBController {
         }
     }
 
-    public function getQuizRecordsFromUser(int $userId): ?array {
+    public function getQuizRecordsFromUser(int $userId): ?array
+    {
         try {
             // connecting to DB
             $this->dbService->connect();
             return $this->dbService->getAllQuizFromUserWithCategoryInDecOrderScore($userId);
         } catch (PDOException $e) {
             return null;
-        }  finally {
+        } finally {
             $this->dbService->closeConnection();
         }
     }
