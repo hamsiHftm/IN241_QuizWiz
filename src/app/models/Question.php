@@ -2,9 +2,9 @@
 
 class Question
 {
-    private $questionText;
-    private $difficulty;
-    private $answers = array();
+    private string $questionText;
+    private string $difficulty;
+    private array $answers;
 
     public function __construct($text, $difficulty)
     {
@@ -13,17 +13,14 @@ class Question
         $this->answers = array();
     }
 
-    public function getQuestionText() {
+    public function getQuestionText(): string
+    {
         return $this->questionText;
     }
 
-    public function getQuestionDifficulty() {
-        return $this->difficulty;
-    }
-
-    public function addAnswer($option): void
+    public function getQuestionDifficulty(): string
     {
-        $this->answers[] = $option;
+        return $this->difficulty;
     }
 
     public function getAnswers(): array
@@ -31,5 +28,36 @@ class Question
         shuffle($this->answers);
         return $this->answers;
     }
+
+    public function addAnswer($option): void
+    {
+        $this->answers[] = $option;
+    }
+
+    public function toArray(): array
+    {
+        $answerArray = [];
+        foreach ($this->answers as $answer) {
+            $answerArray[] = $answer->toArray();
+        }
+
+        return [
+            'questionText' => $this->questionText,
+            'difficulty' => $this->difficulty,
+            'answers' => $answerArray,
+        ];
+    }
+
+    public static function fromArray(array $data): self
+    {
+        $question = new self($data['questionText'], $data['difficulty']);
+
+        foreach ($data['answers'] as $answerData) {
+            $question->addAnswer(Answer::fromArray($answerData));
+        }
+
+        return $question;
+    }
+
 
 }

@@ -1,36 +1,36 @@
 <?php
 
-// TODO save category while generaating dropdown in quizStart
 class Category
 {
-    private $id;
-    private $name;
+    private int $id;
+    private string $name;
 
-    /**
-     * @param $id
-     * @param $name
-     */
     public function __construct($id, $name)
     {
         $this->id = $id;
         $this->name = $name;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
+    }
 
+    public static function fromArray(array $data): self
+    {
+        return new self($data['id'], $data['name']);
+    }
 }

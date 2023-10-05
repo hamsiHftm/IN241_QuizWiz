@@ -13,124 +13,86 @@ require_once '../models/Category.php';
 
 class OpenTriviaAPIService
 {
-    private $baseURL;
-    private $token;
+    private string $baseURL;
 
-    # TODO token
-    public function __construct($url, $token)
+    public function __construct($url)
     {
         $this->baseURL = $url;
-        $this->token = $token;
     }
 
-    public function getToken() {
-        return $this->token;
-    }
-
-    public function generateToken() {
-        $url = $this->baseURL . '/api_token.php?command=request';
-        $response = file_get_contents($url);
-
-        $data = json_decode($response, true);
-        if ($data and $data['response_code'] == 0) {
-            $this->token = $data['token'];
-            return $this->token;
-        }
-        return null;
-    }
-
-    public function resetToken() {
-        $url = $this->baseURL . '/api_token.php?command=reset&token=' . $this->token;
-        $response = file_get_contents($url);
-
-        $data = json_decode($response, true);
-        if ($data and $data['response_code'] == 0) {
-            $this->token = $data['token'];
-            return $this->token;
-        }
-        return null;
-    }
-
-    public function getCategories() {
+    /**
+     * Fetches trivia categories from an external API.
+     *
+     * This method makes a GET request to the API endpoint to retrieve trivia categories.
+     *
+     * @return array An array of trivia categories if the request is successful, or an empty array if there is an error.
+     */
+    public function getCategories(): array
+    {
         $url = $this->baseURL . '/api_category.php';
-        // Make a GET request to the API endpoint and retrieve the response
-        $response = file_get_contents($url);
 
-        // Process the response (e.g., JSON decoding, error handling, etc.)
-        $data = json_decode($response, true);
+        try {
+            // Make a GET request to the API endpoint and retrieve the response
+            $response = file_get_contents($url);
 
-        if ($data) {
-            return $data['trivia_categories'];
+            // Process the response (e.g., JSON decoding, error handling, etc.)
+            $data = json_decode($response, true);
+
+            if ($data && isset($data['trivia_categories'])) {
+                return $data['trivia_categories'];
+            }
+            return [];
+        } catch (Exception $e) {
+            return [];
         }
-        return [];
     }
 
-    public function getQuestions($amount, $categoryID, $categoryName, $difficulty, $questionType): ?Quiz
+    /**
+     * Retrieve questions from an external API based on specified parameters.
+     *
+     * @param int    $amount       The number of questions to retrieve.
+     * @param int    $categoryID   The ID of the category for the questions.
+     * @param string $difficulty   The difficulty level of the questions.
+     * @param string $questionType The type of questions to retrieve.
+     *
+     * @return array|null An array of retrieved questions or an empty array if none found, null for exceptions.
+     */
+    public function getQuestions(int $amount, int $categoryID, string $difficulty, string $questionType): ?array
     {
-        $url = $this->baseURL . '/api.php';
-        $params = array(
-            'amount' => $amount,
-            'category' => $categoryID
-        );
+        try {
+            $url = $this->baseURL . '/api.php';
+            $params = array(
+                'amount' => $amount,
+                'category' => $categoryID
+            );
 
-        if (!empty($this->token)) {
-            $params['token'] = $this->token;
-        }
-        if ($difficulty !== Difficulty::Mixed->value) {
-            $params['difficulty'] = $difficulty;
-        }
-
-        if ($questionType !== QuestionType::Mixed->value) {
-            $params['type'] = $questionType;
-        }
-
-        // Build the query string
-        $queryString = http_build_query($params);
-        // Append the query string to the URL
-        $urlWithParams = $url . '?' . $queryString;
-
-        // Make a GET request to the API endpoint and retrieve the response
-        $response = file_get_contents($urlWithParams);
-        // Process the response (e.g., JSON decoding, error handling, etc.)
-        $data = json_decode($response, true);
-        $quiz = null;
-        if ($data) {
-            $response_code = $data['response_code'];
-            switch ($response_code) {
-                case 0:
-                    $quiz = $this->extract_quiz_from_response($categoryID, $categoryName, $difficulty, $questionType, $data['results']);
-                    break;
-                case 1:
-                    # TODO return notification to change the difficult to other or chose mixed,
-                    # otherwis change the category, because not enough question available
-                    break;
-                case 3:
-                    # TODO create new token and save to the user and request again the question
-                    break;
-                case 4:
-                    # TODO regenerate Token, because all question are called. So ressetting token is necessary
-                    break;
-                default:
-                    # TODO Notfictation something went wrong notification
-                    break;
+            if (!empty($this->token)) {
+                $params['token'] = $this->token;
+            }
+            if ($difficulty !== Difficulty::Mixed->value) {
+                $params['difficulty'] = $difficulty;
             }
 
-        }
-        return $quiz;
-    }
-
-    private function extract_quiz_from_response($categoryID, $categoryName, $difficulty, $questionType, $results): Quiz
-    {
-        $quiz = new Quiz(new Category($categoryID, $categoryName), $difficulty, $questionType);
-        foreach ($results as $result) {
-            $question = new Question($result['question'], $result['difficulty']);
-            $question->addAnswer(new Answer($result['correct_answer'], true));
-
-            foreach ($result['incorrect_answers'] as $incorrect_answer) {
-                $question->addAnswer(new Answer($incorrect_answer, false));
+            if ($questionType !== QuestionType::Mixed->value) {
+                $params['type'] = $questionType;
             }
-            $quiz->addQuestion($question);
+
+            // Build the query string
+            $queryString = http_build_query($params);
+            // Append the query string to the URL
+            $urlWithParams = $url . '?' . $queryString;
+
+            // Make a GET request to the API endpoint and retrieve the response
+            $response = file_get_contents($urlWithParams);
+            // Process the response (e.g., JSON decoding, error handling, etc.)
+            $data = json_decode($response, true);
+
+            if ($data && isset($data['results'])) {
+                return $data['results'];
+            }
+            return [];
+        } catch (Exception $e) {
+            return [];
         }
-        return $quiz;
     }
 }

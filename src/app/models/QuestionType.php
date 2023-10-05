@@ -14,4 +14,14 @@ enum QuestionType: string
             self::Mixed
         ];
     }
+
+    public static function fromString(string $typeString): ?QuestionType
+    {
+        return match ($typeString) {
+            'multiple' => self::Multiple,
+            'boolean' => self::TrueOrFalse,
+            'mixed' => self::Mixed,
+            default => null,
+        };
+    }
 }

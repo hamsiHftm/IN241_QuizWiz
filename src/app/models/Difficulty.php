@@ -16,4 +16,15 @@ enum Difficulty: string
             self::Mixed
         ];
     }
+
+    public static function fromString(string $difficultyString): ?Difficulty
+    {
+        return match ($difficultyString) {
+            'easy' => self::Easy,
+            'medium' => self::Medium,
+            'hard' => self::Hard,
+            'mixed' => self::Mixed,
+            default => null,
+        };
+    }
 }

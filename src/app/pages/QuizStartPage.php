@@ -1,18 +1,20 @@
 <?php
-require_once '../../config.php';
+require_once '../controllers/APIController.php';
 require_once '../models/Difficulty.php';
 require_once '../models/QuestionType.php';
-require_once '../services/OpenTriviaAPIService.php';
 
 // Start the session if not already started
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$api_base_url = $GLOBALS['API_BASE_URL'];
-$triviaAPI = new OpenTriviaAPIService($api_base_url, null);
+// initiation ApiController class
+$apiController = new APIController();
 
+// getting categories
+$categories = $apiController->getCategories();
 
+// quiz start button action
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submit'])) {
         $selectedCategoryValue = explode('-', $_POST['categorySel']);
@@ -21,10 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $selectedDifficulty = $_POST['difficulty'];
         $selectedType = $_POST['type'];
 
-        $quiz = $triviaAPI->getQuestions($GLOBALS['NR_OF_QUESTIONS'], $selectedCategoryID, $selectedCategoryName, $selectedDifficulty, $selectedType);
-        if ($quiz) {
-            $quiz->setPlayingMode(true);
-            $_SESSION['quiz'] = $quiz;
+        $isGenerated = $apiController->generateQuizAndQuestions($selectedCategoryID, $selectedCategoryName, $selectedDifficulty, $selectedType);
+        if ($isGenerated) {
             header("Location: QuizQuestionPage.php?nr=1&score=0");
         }
         exit;
@@ -51,19 +51,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="mb-3">
                 <div class="qw-label">Category</div>
             <?php
-            $categories = null;
-            if (isset($_SESSION['categories'])) {
-                $categories = $_SESSION['categories'];
-            } else {
-                $categories = $triviaAPI->getCategories();
-                $_SESSION['categories'] = $categories;
-            }
             if (!empty($categories)) {
                 ?>
                 <select name="categorySel" id="categorySel" class="form-select qw-form-select">
                     <?php foreach ($categories as $category) { ?>
-                        <option value="<?php echo $category['id']. '-' .$category['name']; ?>">
-                            <?php echo $category['name']; ?>
+                        <option value="<?php echo $category->getId(). '-' .$category->getName(); ?>">
+                            <?php echo $category->getName(); ?>
                         </option>
                     <?php } ?>
                 </select>

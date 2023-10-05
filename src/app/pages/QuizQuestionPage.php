@@ -2,14 +2,13 @@
 require_once '../models/Quiz.php';
 require_once '../models/Answer.php';
 require_once '../models/Question.php';
+require_once '../controllers/APIController.php';
 
 // Start the session if not already started
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// TODO prvent from going back
-// TODO timer (nice to have)
 // Retrieving the current question nr from params
 $questionNr = null;
 if (isset($_GET['nr'])) {
@@ -25,20 +24,18 @@ if (isset($_GET['score'])) {
 $currentQuestion = null;
 $quiz = null;
 
-// Check if the quiz object exists in the session and retrieving quiz from the session
-if (isset($_SESSION['quiz'])) {
-    $quiz = $_SESSION['quiz'];
+$apiController = new APIController();
+$quiz = $apiController->retrievingQuizFromSession();
+if ($quiz) {
+    $currentQuestion = $quiz->getQuestions()[$questionNr - 1];
 
-    // setting current question from quiz using question-Nr retrieved from params
-    if ($quiz instanceof Quiz) {
-        $currentQuestion = $quiz->getQuestions()[$questionNr - 1];
-
-        // calculating score from previous question
-        if ($questionNr > 1 && $isAnswerCorrect === 1) {
-            $quiz->addPoints($quiz->getQuestions()[$questionNr - 2]->getQuestionDifficulty());
-        }
+    if ($questionNr > 1 && $isAnswerCorrect === 1) {
+        $quiz->addPoints($quiz->getQuestions()[$questionNr - 2]->getQuestionDifficulty());
     }
 }
+
+$currentPoints = $quiz->getCurrentPoints();
+
 ?>
 
 <!DOCTYPE html>
@@ -82,7 +79,7 @@ if (isset($_SESSION['quiz'])) {
         <!-- button and score blocks -->
         <div class="qw-question-score-container d-flex justify-content-between">
             <div class="qw-score d-flex align-items-center justify-content-center">
-                <span>Current Score: <strong><?php echo $quiz->getCurrentPoints()?></strong></span>
+                <span>Current Score: <strong><?php echo $currentPoints ?></strong></span>
             </div>
 
             <div class="qw-button-container d-flex align-items-center justify-content-center">
