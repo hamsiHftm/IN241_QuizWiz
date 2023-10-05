@@ -1,4 +1,5 @@
 <?php
+// retrieving the playingMode from Quiz-Object to hide the impressum Link
 $isPlaying = false;
 if (isset($_SESSION['quiz'])) {
     $quiz = $_SESSION['quiz'];
@@ -14,9 +15,9 @@ if (isset($_SESSION['quiz'])) {
     </div>
     <div>
         <?php
-            if (!$isPlaying) {
-                echo '<a class="footer-link" href="../pages/ImpressumPage.php">Impressum</a>';
-            }
+        if (!$isPlaying) {
+            echo '<a class="footer-link" href="../pages/ImpressumPage.php">Impressum</a>';
+        }
         ?>
     </div>
 </footer>
