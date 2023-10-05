@@ -301,5 +301,16 @@ class DBController {
         }
     }
 
+    public function getQuizRecordsFromUser(int $userId): ?array {
+        try {
+            // connecting to DB
+            $this->dbService->connect();
+            return $this->dbService->getAllQuizFromUserWithCategoryInDecOrderScore($userId);
+        } catch (PDOException $e) {
+            return null;
+        }  finally {
+            $this->dbService->closeConnection();
+        }
+    }
 }
 

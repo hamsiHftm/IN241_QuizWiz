@@ -14,6 +14,8 @@ $user = $dbController->updateUserQuizInfos(AuthController::getUser());
 $highScore = $user->getScoredHighScore();
 $nrOfPlayedGames = $user->getNrOfPlayedGames();
 $dateOfBirth = $user->getDateOfBirth();
+
+$records = $dbController->getQuizRecordsFromUser($user->getDBId());
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,8 +73,33 @@ $dateOfBirth = $user->getDateOfBirth();
                     </form>
                 </div>
             </div>
+            <hr class="my-4">
             <div class="row">
-
+                <h3>Played games</h3>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Difficulty</th>
+                        <th scope="col">Total Score</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $counter = 1;
+                    foreach ($records as $record) {
+                        echo '<tr>';
+                        echo '<th scope="row">' . $counter . '</th>';
+                        echo '<td>' . htmlspecialchars($record['category_name']) . '</td>';
+                        echo '<td>' . htmlspecialchars($record['difficulty']) . '</td>';
+                        echo '<td>' . htmlspecialchars($record['total_score']) . '</td>';
+                        echo '</tr>';
+                        $counter++;
+                    }
+                    ?>
+                    </tbody>
+                </table>
             </div>
     </div>
 </div>
