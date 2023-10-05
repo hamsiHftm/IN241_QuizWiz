@@ -21,21 +21,23 @@ if (isset($_GET['score'])) {
     $isAnswerCorrect = intval($_GET['score']);
 }
 
-$currentQuestion = null;
-$quiz = null;
-
+// retrieving quiz from session
 $apiController = new APIController();
 $quiz = $apiController->retrievingQuizFromSession();
-if ($quiz) {
-    $currentQuestion = $quiz->getQuestions()[$questionNr - 1];
 
-    if ($questionNr > 1 && $isAnswerCorrect === 1) {
-        $quiz->addPoints($quiz->getQuestions()[$questionNr - 2]->getQuestionDifficulty());
-    }
+// if quiz is null, then displaying error page
+if ($quiz === null or !($quiz instanceof Quiz)) {
+    echo "<script>window.location.href = 'ErrorPage.php';</script>";
 }
 
+// retrieving currentQuestion from quiz based on query params
+$currentQuestion = $quiz->getQuestions()[$questionNr - 1];
+if ($questionNr > 1 && $isAnswerCorrect === 1) {
+    $quiz->addPoints($quiz->getQuestions()[$questionNr - 2]->getQuestionDifficulty());
+    // updating quiz in session
+    $apiController->updateQuizInSession($quiz);
+}
 $currentPoints = $quiz->getCurrentPoints();
-
 ?>
 
 <!DOCTYPE html>

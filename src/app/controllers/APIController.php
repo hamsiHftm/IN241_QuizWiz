@@ -86,6 +86,11 @@ class APIController
         }
     }
 
+    /**
+     * Retrieve the Quiz object from the session.
+     *
+     * @return Quiz|null The retrieved Quiz object, or null if not found in the session.
+     */
     public function retrievingQuizFromSession(): ?Quiz
     {
         $quiz = null;
@@ -95,6 +100,20 @@ class APIController
             $quiz = Quiz::fromArray($quizArray);
         }
         return $quiz;
+    }
+
+    /**
+     * Update the quiz data in the session.
+     *
+     * @param Quiz $quiz The Quiz object to update in the session.
+     */
+    public function updateQuizInSession(Quiz $quiz): void
+    {
+        // Convert the Quiz object to an associative array
+        $quizArray = $quiz->toArray();
+
+        // Update the quiz data in the session
+        $_SESSION['quiz'] = $quizArray;
     }
 
     /**

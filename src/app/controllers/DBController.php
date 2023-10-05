@@ -133,7 +133,7 @@ class DBController {
             }
 
             // saving quiz
-            $isQuizSaved = $this->dbService->saveQuiz($user->getDBId(), $quiz->getDifficulty(), $categoryId, $quiz->getCurrentPoints());
+            $isQuizSaved = $this->dbService->saveQuiz($user->getDBId(), $quiz->getDifficulty()->value, $categoryId, $quiz->getCurrentPoints());
         } catch (PDOException $e) {
             // Handle any database errors here
             echo "Error: " . $e->getMessage();

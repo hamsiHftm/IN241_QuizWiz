@@ -106,8 +106,6 @@ class Quiz
                 $quiz->addQuestion(Question::fromArray($questionData));
             }
         }
-        var_dump($data['currentPoints']);
-        var_dump($data['isPlaying']);
         $quiz->setCurrentPoints($data['currentPoints']);
         $quiz->setPlayingMode($data['isPlaying']);
 

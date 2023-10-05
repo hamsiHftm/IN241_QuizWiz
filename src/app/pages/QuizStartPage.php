@@ -13,6 +13,9 @@ $apiController = new APIController();
 
 // getting categories
 $categories = $apiController->getCategories();
+if (empty($categories)) {
+    echo "<script>window.location.href = 'ErrorPage.php';</script>";
+}
 
 // quiz start button action
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
