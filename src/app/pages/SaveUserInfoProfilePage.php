@@ -29,5 +29,5 @@ if ($result['success']) {
     echo "<script>alert('" . $result['message'] . "');</script>";
 }
 
-// redirectig to profile page
+// redirecting to profile page
 echo "<script>window.location.href = 'ProfilePage.php';</script>";

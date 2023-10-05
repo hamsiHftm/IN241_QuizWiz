@@ -13,7 +13,11 @@
 }
 
 .qw-options-container {
-    padding: 5vh 0;
+    padding: 25px 0;
+}
+
+.qw-option-row {
+    margin: 20px 0;
 }
 
 .qw-option {
@@ -21,16 +25,18 @@
     padding: 20px 0;
     text-align: center;
     border: 1px var(--qw-grey) solid;
-    width: 45%;
-    margin-top: 0.75%;
-    margin-bottom: 0.75%;
     border-radius: 5px;
     box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
 }
 
 .qw-option-selected {
-    border-color: var(--qw-pastal-yellow);
-    background: var(--qw-pastal-yellow);
+    border-color: var(--qw-dar-pastal-yellow);
+    background: var(--qw-dar-pastal-yellow);
+}
+
+.qw-option-selected:hover{
+    border-color: var(--qw-dar-pastal-yellow) !important;
+    background: var(--qw-dar-pastal-yellow) !important;
 }
 
 .qw-option-correct {
@@ -39,24 +45,27 @@
 }
 
 .qw-option-correct-border {
-    border-color: var(--qw-pastal-green);
-    color: var(--qw-pastal-green);
-    background: var(--qw-white);
+    background: var(--qw-dark-pastal-green);
+    border-color: var(--qw-dark-pastal-green);
+    color: var(--qw-white);
 }
 
 .qw-option-wrong {
-    border-color: var(--qw-pastal-red);
-    background: var(--qw-pastal-red);
+border-color: var(--qw-pastal-red);
+background: var(--qw-pastal-red);
 }
 
 /* Apply margin-right: 2.5% to the 1st and 3rd elements */
+
 .qw-options-container .row .qw-option:nth-child(2n+1) {
-    margin-right: 2.5%;
+    margin-right: 25px;
+    margin-left: 10px;
 }
 
 /* Apply margin-left: 2.5% to the 2nd and 4th elements */
 .qw-options-container .row .qw-option:nth-child(2n) {
-    margin-left: 2.5%;
+    margin-left: 25px;
+    margin-right: 10px;
 }
 
 .qw-option:hover, .qw-option.selected,

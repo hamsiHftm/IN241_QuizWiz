@@ -29,19 +29,21 @@
                               class="qw-form col d-flex flex-column justify-content-between">
                             <div class="form-group">
                                 <label for="firstnameInput">Firstname</label>
-                                <input type="text" class="form-control" id="firstnameInput" name="firstname">
+                                <input type="text" class="form-control qw-form-text-box" id="firstnameInput"
+                                       name="firstname">
 
                             </div>
 
                             <div class="form-group">
                                 <label for="lastnameInput">Lastname</label>
-                                <input type="text" class="form-control" id="lastnameInput" name="lastname">
+                                <input type="text" class="form-control qw-form-text-box" id="lastnameInput"
+                                       name="lastname">
                             </div>
 
                             <div class="form-group">
                                 <label for="dateOfBirthInput">Date of Birth</label>
                                 <div class='input-group date' id='dateOfBirthInput'>
-                                    <input type='date' class="form-control" name="dateOfBirth"/>
+                                    <input type='date' class="form-control qw-form-text-box" name="dateOfBirth"/>
                                     <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -50,16 +52,18 @@
 
                             <div class="form-group">
                                 <label for="usernameInput">Username / Email *</label>
-                                <input type="text" class="form-control" id="usernameInput" name="username" required>
+                                <input type="text" class="form-control qw-form-text-box" id="usernameInput"
+                                       name="username" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="passwordInput">Password *</label>
-                                <input type="password" class="form-control" id="passwordInput" name="password" required>
+                                <input type="password" class="form-control qw-form-text-box" id="passwordInput"
+                                       name="password" required>
                             </div>
                             <div class="form-group">
                                 <label for="repeatPasswordInput">Repeat Password *</label>
-                                <input type="password" class="form-control" id="repeatPasswordInput"
+                                <input type="password" class="form-control qw-form-text-box" id="repeatPasswordInput"
                                        name="repeatPassword" required>
                             </div>
                             <div>

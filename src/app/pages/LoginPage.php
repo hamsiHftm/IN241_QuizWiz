@@ -49,12 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
                               action="LoginPage.php">
 
                             <div class="form-group">
-                                <label for="usernameInput">Username / Email</label>
-                                <input type="text" class="form-control" id="usernameInput" name="username">
+                                <label for="usernameInput">Username / Email *</label>
+                                <input type="text" class="form-control qw-form-text-box" id="usernameInput" name="username" required>
                             </div>
                             <div class="form-group">
-                                <label for="passwordInput">Password</label>
-                                <input type="password" class="form-control" name="password" id="passwordInput">
+                                <label for="passwordInput">Password *</label>
+                                <input type="password" class="form-control qw-form-text-box" name="password" id="passwordInput" required>
                             </div>
                             <div>
                                 <button class="qw-red-button" type="submit">Login</button>

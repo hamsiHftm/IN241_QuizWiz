@@ -29,6 +29,10 @@ a:link, a:visited, a:hover, a:active{
     text-decoration: none;
 }
 
+.qw-red-text {
+    color: var(--qw-red);;
+}
+
 /***************************************
  Containers style
 ****************************************/

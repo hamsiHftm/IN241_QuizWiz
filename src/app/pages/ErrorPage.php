@@ -15,6 +15,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <div class="qw-content d-flex justify-content-center">
         <div class="text-center">
             <h1>Sorry! Something went wrong!</h1>
+            <br>
             <p>An issue has arisen, preventing the retrieval of information from the database or API, and we are
                 actively investigating the situation to identify and resolve any other underlying problems.</p>
             <p>Please retry your request, or consider exploring alternative functionalities for the time being. </p>
