@@ -118,5 +118,27 @@ class AuthController
             return null;
         }
     }
+
+    /**
+     * Update the user data in the session.
+     *
+     * @param User $user The User object to update in the session.
+     *
+     * @return void
+     */
+    public static function updateUser(User $user): void
+    {
+        // Start the session if not already started
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Update the user data in the session
+        $_SESSION['user'] = $user->toArray();
+
+        // Optionally, you can regenerate the session ID for security
+        session_regenerate_id(true);
+    }
+
 }
 

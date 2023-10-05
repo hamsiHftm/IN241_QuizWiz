@@ -2,13 +2,13 @@
 
 class User
 {
-    private $dbId;
-    private $username;
-    private $firstname;
-    private $lastname;
-    private $dateOfBirth;
-    private $scoredHighScore;
-    private $nrOfPlayedGames;
+    private ?int $dbId;
+    private ?string $username;
+    private ?string $firstname;
+    private ?string $lastname;
+    private ?string $dateOfBirth;
+    private ?int $scoredHighScore;
+    private ?int $nrOfPlayedGames;
 
     public function __construct($dbId, $username, $firstname, $lastname, $dateOfBirth)
     {
@@ -17,77 +17,72 @@ class User
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->dateOfBirth = $dateOfBirth;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFirstname()
-    {
-        return $this->firstname;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLastname()
-    {
-        return $this->lastname;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDateOfBirth()
-    {
-        return $this->dateOfBirth;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getScoredHighScore()
-    {
-        return $this->scoredHighScore;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNrOfPlayedGames()
-    {
-        return $this->nrOfPlayedGames;
-    }
-
-    /**
-     * @param mixed $scoredHighScore
-     */
-    public function setScoredHighScore($scoredHighScore): void
-    {
-        $this->scoredHighScore = $scoredHighScore;
-    }
-
-    /**
-     * @param mixed $nrOfPlayedGames
-     */
-    public function setNrOfPlayedGames($nrOfPlayedGames): void
-    {
-        $this->nrOfPlayedGames = $nrOfPlayedGames;
+        $this->scoredHighScore = null;
+        $this->nrOfPlayedGames = null;
     }
 
     public function getDBId(): int {
         return $this->dbId;
     }
 
-    public function toArray()
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function getDateOfBirth(): ?string
+    {
+        return $this->dateOfBirth;
+    }
+
+    public function getScoredHighScore(): ?int
+    {
+        return $this->scoredHighScore;
+    }
+
+    public function getNrOfPlayedGames(): ?int
+    {
+        return $this->nrOfPlayedGames;
+    }
+
+    public function setDBId($dbId): void {
+        $this->dbId = $dbId;
+    }
+
+    public function setFirstname($firstname): void {
+        $this->firstname = $firstname;
+    }
+
+    public function setLastname($lastname): void {
+        $this->lastname = $lastname;
+    }
+
+    public function setDateOfBirth($dateOfBirth): void
+    {
+        $this->dateOfBirth = $dateOfBirth;
+    }
+
+    public function setScoredHighScore($scoredHighScore): void
+    {
+        $this->scoredHighScore = $scoredHighScore;
+    }
+
+    public function setNrOfPlayedGames($nrOfPlayedGames): void
+    {
+        $this->nrOfPlayedGames = $nrOfPlayedGames;
+    }
+
+    public function toArray(): array
     {
         return [
             'id' => $this->dbId,
@@ -97,16 +92,14 @@ class User
         ];
     }
 
-    public static function fromArray(array $data) {
-        // Create a new User object and set its properties from the array
-        $user = new self(
+    public static function fromArray(array $data): User
+    {
+        return new self(
             $data['id'],
             $data['username'],
             $data['firstname'],
             $data['lastname'],
             null
         );
-
-        return $user;
     }
 }

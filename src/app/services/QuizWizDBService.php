@@ -155,7 +155,7 @@ class QuizWizDBService
                 return null; // Player not found
             }
         } catch (PDOException $e) {
-            return null; // Query failed
+            return null;
         }
     }
 
@@ -199,7 +199,80 @@ class QuizWizDBService
         }
     }
 
-    public function saveQuiz($playerId, $difficulty, $categoryId, $totalScore): bool
+    /**
+     * Update a user's first name, last name, and date of birth based on their username.
+     *
+     * @param string $username       The username of the user to update.
+     * @param string|null $first_name The new first name (optional, set to null to not update).
+     * @param string|null $last_name  The new last name (optional, set to null to not update).
+     * @param string|null $date_of_birth The new date of birth (optional, set to null to not update).
+     *
+     * @return bool Returns true if the user's information was successfully updated, false otherwise.
+     */
+    public function updateUserProfile(string $username, ?string $first_name = null, ?string $last_name = null, ?string $date_of_birth = null): bool
+    {
+        try {
+            // Prepare the SQL statement to update user information
+            $sql = "UPDATE Player SET";
+
+            // Add fields to update if provided
+            $updates = [];
+            if ($first_name !== null) {
+                $updates[] = "first_name = :first_name";
+            }
+            if ($last_name !== null) {
+                $updates[] = "last_name = :last_name";
+            }
+            if ($date_of_birth !== null) {
+                $updates[] = "date_of_birth = :date_of_birth";
+            }
+
+            // Combine the update clauses
+            $sql .= " " . implode(", ", $updates);
+
+            // Add the WHERE clause to specify the user by username
+            $sql .= " WHERE username = :username";
+
+            // Prepare the SQL statement with the update query
+            $stmt = $this->pdo->prepare($sql);
+
+            // Bind parameters
+            $stmt->bindParam(':username', $username);
+            if ($first_name !== null) {
+                $stmt->bindParam(':first_name', $first_name);
+            }
+            if ($last_name !== null) {
+                $stmt->bindParam(':last_name', $last_name);
+            }
+            if ($date_of_birth !== null) {
+                $stmt->bindParam(':date_of_birth', $date_of_birth);
+            }
+
+            // Execute the prepared statement
+            $stmt->execute();
+
+            // Check if any rows were affected
+            if ($stmt->rowCount() > 0) {
+                return true; // User profile updated successfully
+            } else {
+                return false; // No rows updated (user not found)
+            }
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Save a new quiz record in the database.
+     *
+     * @param int $playerId     The ID of the player associated with the quiz.
+     * @param string $difficulty   The difficulty level of the quiz.
+     * @param int $categoryId   The category ID of the quiz.
+     * @param int $totalScore   The total score achieved in the quiz.
+     *
+     * @return bool Returns true if the quiz record was successfully inserted, false otherwise.
+     */
+    public function saveQuiz(int $playerId, string $difficulty, int $categoryId, int $totalScore): bool
     {
         try {
             // Prepare the SQL statement for inserting a new player
@@ -208,7 +281,7 @@ class QuizWizDBService
 
             // Bind parameters
             $stmt->bindParam(':playerId', $playerId, PDO::PARAM_INT);
-            $stmt->bindParam(':difficulty', $difficulty, PDO::PARAM_STR);
+            $stmt->bindParam(':difficulty', $difficulty);
             $stmt->bindParam(':categoryId', $categoryId, PDO::PARAM_INT);
             $stmt->bindParam(':totalScore', $totalScore, PDO::PARAM_INT);
 
@@ -217,41 +290,54 @@ class QuizWizDBService
 
             return true; // Record inserted successfully
         } catch (PDOException $e) {
-            // Handle any database errors here
-            echo "Error: " . $e->getMessage();
-            return false; // Record insertion failed
+            return false;
         }
     }
 
-    public function saveCategory($identifier, $name): bool
+    /**
+     * Save a new category record in the database.
+     *
+     * @param string $identifier The identifier of the category.
+     * @param string $name       The name of the category.
+     *
+     * @return bool Returns true if the category record was successfully inserted, false otherwise.
+     */
+    public function saveCategory(string $identifier, string $name): bool
     {
         try {
             // Prepare the SQL statement for inserting a new player
             $stmt = $this->pdo->prepare("INSERT INTO Category (identifier, name) VALUES (:identifier, :name)");
 
             // Bind parameters
-            $stmt->bindParam(':identifier', $identifier, PDO::PARAM_STR);
-            $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+            $stmt->bindParam(':identifier', $identifier);
+            $stmt->bindParam(':name', $name);
 
             // Execute the statement to insert the record
             $stmt->execute();
 
             return true; // Record inserted successfully
         } catch (PDOException $e) {
-            // Handle any database errors here
-            echo "Error: " . $e->getMessage();
-            return false; // Record insertion failed
+            return false;
         }
     }
 
-    public function getCategoryByIdentifierAndName($identifier, $name): ?array {
+    /**
+     * Get a category by its identifier and name.
+     *
+     * @param string $identifier The identifier of the category.
+     * @param string $name       The name of the category.
+     *
+     * @return array|null Returns an associative array with category data if found,
+     *                   or null if the category is not found.
+     */
+    public function getCategoryByIdentifierAndName(string $identifier, string $name): ?array {
         try {
             // Prepare the SQL statement for get the player
             $stmt = $this->pdo->prepare("SELECT * FROM Category where identifier = :identifier and name = :name");
 
             // Bind the parameters to the prepared statement
-            $stmt->bindParam(':identifier', $identifier, PDO::PARAM_STR);
-            $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+            $stmt->bindParam(':identifier', $identifier);
+            $stmt->bindParam(':name', $name);
 
             // Execute the prepared statement
             $stmt->execute();
@@ -259,13 +345,27 @@ class QuizWizDBService
             // Fetch the result (assuming there's only one matching record)
             return $stmt->fetch(PDO::FETCH_ASSOC); // Return the category record or false if not found
         } catch (PDOException $e) {
-            // Handle any database errors here
-            echo "Error: " . $e->getMessage();
-            return null; // Query failed
+            return null;
         }
     }
 
-    public function getQuizRecordsInDecOrderScore($limit) {
+    /**
+     * Retrieve quiz records in descending order of total score with a specified limit.
+     *
+     * @param int $limit The maximum number of quiz records to retrieve.
+     *
+     * @return array|null An array of associative arrays representing quiz records or null if the query fails.
+     *                    Each associative array contains the following keys:
+     *                    - 'id' (int): The unique identifier of the quiz record.
+     *                    - 'username' (string): The username of the player who took the quiz.
+     *                    - 'name' (string): The name of the category to which the quiz belongs.
+     *                    - 'difficulty' (string): The difficulty level of the quiz.
+     *                    - 'total_score' (int): The total score achieved in the quiz.
+     *
+     * @throws PDOException If there are any database-related errors, they will be caught and null will be returned.
+     */
+    public function getQuizRecordsInDecOrderScore(int $limit): ?array
+    {
         try {
             // Prepare the SQL statement to retrieve the top quiz records
             $stmt = $this->pdo->prepare("
@@ -284,13 +384,82 @@ class QuizWizDBService
             $stmt->execute();
 
             // Fetch the results as an associative array
-            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            return $results;
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($result !== false) {
+                return $result;
+            } else {
+                return null;
+            }
         } catch (PDOException $e) {
-            // Handle any database errors here
-            echo "Error: " . $e->getMessage();
-            return null; // Query failed
+            return null;
         }
     }
+
+    /**
+     * Get all quizzes played by a user with category information in descending order of score.
+     *
+     * @param int $playerId The ID of the user whose quizzes you want to retrieve.
+     *
+     * @return array Returns an array of quiz records with category information, ordered by total_score in descending order.
+     */
+    public function getAllQuizFromUserWithCategoryInDecOrderScore(int $playerId): array
+    {
+        try {
+            // Prepare the SQL statement to retrieve all quizzes played by the user with category information
+            $stmt = $this->pdo->prepare("
+            SELECT Q.*, C.identifier AS category_identifier, C.name AS category_name
+            FROM Quiz Q
+            INNER JOIN Category C ON Q.category_id = C.id
+            WHERE Q.player_id = :playerId
+            ORDER BY Q.total_score DESC
+        ");
+
+            // Bind the parameter for player_id
+            $stmt->bindParam(':playerId', $playerId, PDO::PARAM_INT);
+
+            // Execute the prepared statement
+            $stmt->execute();
+
+            // Fetch all results as an array of associative arrays
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    /**
+     * Update a user's password in the database.
+     *
+     * This method allows updating a user's password in the database by providing the username
+     * and the hashed new password.
+     *
+     * @param string $username The username of the user whose password is being updated.
+     * @param string $hashedNewPassword The hashed new password to set for the user.
+     *
+     * @return bool True if the password was successfully updated, false otherwise.
+     */
+    public function updateUserPassword(string $username, string $hashedNewPassword): bool
+    {
+        try {
+            // Prepare the SQL statement for updating the user's password
+            $stmt = $this->pdo->prepare("
+            UPDATE Player
+            SET password = :hashedNewPassword
+            WHERE username = :username
+        ");
+
+            // Bind parameters
+            $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+            $stmt->bindParam(':hashedNewPassword', $hashedNewPassword, PDO::PARAM_STR);
+
+            // Execute the statement to update the password
+            $stmt->execute();
+
+            // Check if any rows were affected (password updated)
+            return $stmt->rowCount() > 0;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
 }
