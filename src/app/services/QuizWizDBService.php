@@ -1,6 +1,4 @@
 <?php
-require_once '../models/User.php';
-require_once '../models/Category.php';
 
 /**
  * Contains all the DB functions for postgres

@@ -1,12 +1,14 @@
 <?php
-// retrieving the playingMode from Quiz-Object to hide the impressum Link
+require_once '../controllers/APIController.php';
+
+// retrieving the playingMode from Quiz-Object to hide the navigation-bar
+$apiController = new APIController();
+$quiz = $apiController->retrievingQuizFromSession();
 $isPlaying = false;
-if (isset($_SESSION['quiz'])) {
-    $quiz = $_SESSION['quiz'];
-    if ($quiz instanceof Quiz) {
-        $isPlaying = $quiz->getPlayingMode();
-    }
+if ($quiz) {
+    $isPlaying = $quiz->getPlayingMode();
 }
+
 ?>
 
 <footer class="d-flex flex-wrap justify-content-between align-items-center mt-auto qw-footer qw-blue-container">

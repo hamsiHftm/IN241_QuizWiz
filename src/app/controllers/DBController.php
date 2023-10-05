@@ -2,6 +2,7 @@
 
 require_once '../../config.php';
 require_once '../services/QuizWizDBService.php';
+require_once '../models/User.php';
 
 class DBController
 {

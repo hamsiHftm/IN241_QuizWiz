@@ -2,6 +2,10 @@
 
 require_once '../../config.php';
 require_once '../services/OpenTriviaAPIService.php';
+require_once '../models/Category.php';
+require_once '../models/Quiz.php';
+require_once '../models/Question.php';
+require_once '../models/Answer.php';
 
 class APIController
 {

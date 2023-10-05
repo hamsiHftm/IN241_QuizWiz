@@ -1,17 +1,18 @@
 <?php
 require_once '../controllers/AuthController.php';
+require_once '../controllers/APIController.php';
 
 // retrieving the logged-in user to adjust the navigation-bar
 $user = AuthController::getUser();
 
 // retrieving the playingMode from Quiz-Object to hide the navigation-bar
+$apiController = new APIController();
+$quiz = $apiController->retrievingQuizFromSession();
 $isPlaying = false;
-if (isset($_SESSION['quiz'])) {
-    $quiz = $_SESSION['quiz'];
-    if ($quiz instanceof Quiz) {
-        $isPlaying = $quiz->getPlayingMode();
-    }
+if ($quiz) {
+    $isPlaying = $quiz->getPlayingMode();
 }
+
 ?>
 
 <header class="qw-header qw-blue-container">

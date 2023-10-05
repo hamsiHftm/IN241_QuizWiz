@@ -3,13 +3,7 @@
 /**
  * OpenTriviaAPIService functional class
  *
- * Includes methods to retrieve and interact with data from OpenTrivia
- * 1. getCategories --> get all the quiz topic
  */
-require_once '../models/Quiz.php';
-require_once '../models/Question.php';
-require_once '../models/Answer.php';
-require_once '../models/Category.php';
 
 class OpenTriviaAPIService
 {
@@ -50,9 +44,9 @@ class OpenTriviaAPIService
     /**
      * Retrieve questions from an external API based on specified parameters.
      *
-     * @param int    $amount       The number of questions to retrieve.
-     * @param int    $categoryID   The ID of the category for the questions.
-     * @param string $difficulty   The difficulty level of the questions.
+     * @param int $amount The number of questions to retrieve.
+     * @param int $categoryID The ID of the category for the questions.
+     * @param string $difficulty The difficulty level of the questions.
      * @param string $questionType The type of questions to retrieve.
      *
      * @return array|null An array of retrieved questions or an empty array if none found, null for exceptions.
