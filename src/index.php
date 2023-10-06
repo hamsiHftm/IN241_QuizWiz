@@ -5,8 +5,8 @@
     <link rel="stylesheet" href="assets/css/LandingPageStyle.css">
 </head>
 <body>
-<!-- TODO maybe add in index with scroll -->
-<!-- TODO navigation URL wenn somethin wrong url redirect to error page, and maybe nice name -->
+<!-- TODO maybe combine landing page and home page -->
+<!-- TODO add navigation URL controller -> when something wrong url redirect to error page, and change the url path in the header -->
 <div class="container-fluid landing-page-container">
     <div class="row landing-page-container">
         <div class="col-5">
