@@ -4,8 +4,7 @@ CREATE TABLE IF NOT EXISTS Player (
 	password VARCHAR(500) NOT NULL,
 	first_name VARCHAR(150),
 	last_name VARCHAR(150),
-	date_of_birth DATE,
-	quiz_session_token VARCHAR(255)
+	date_of_birth DATE
 );
 
 CREATE TABLE IF NOT EXISTS Category (
