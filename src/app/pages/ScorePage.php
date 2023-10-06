@@ -31,7 +31,7 @@ if ($quiz === null or !($quiz instanceof Quiz)) {
 
 // calculating score for last question
 if ($isAnswerCorrect === 1) {
-    $quiz->addPoints($quiz->getQuestions()[9]->getQuestionDifficulty());
+    $quiz->getQuestions()[9]->setSolvedCorrectly(true);
     $quiz->setPlayingMode(false);
 }
 
