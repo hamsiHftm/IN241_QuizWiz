@@ -33,6 +33,7 @@ if ($quiz === null or !($quiz instanceof Quiz)) {
 if ($isAnswerCorrect === 1) {
     $quiz->getQuestions()[9]->setSolvedCorrectly(true);
     $quiz->setPlayingMode(false);
+    $apiController->updateQuizInSession($quiz);
 }
 
 // retrieving attribute

@@ -72,14 +72,12 @@ class Quiz
 
     public function addPoints($difficulty): void
     {
-        if ($this->isPlaying) {
-            if ($difficulty === 'easy') {
-                $this->currentPoints += 250;
-            } elseif ($difficulty === 'medium') {
-                $this->currentPoints += 500;
-            } elseif ($difficulty === 'hard') {
-                $this->currentPoints += 1000;
-            }
+        if ($difficulty === 'easy') {
+            $this->currentPoints += 250;
+        } elseif ($difficulty === 'medium') {
+            $this->currentPoints += 500;
+        } elseif ($difficulty === 'hard') {
+            $this->currentPoints += 1000;
         }
     }
 
