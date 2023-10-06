@@ -33,7 +33,8 @@ if ($quiz === null or !($quiz instanceof Quiz)) {
 // retrieving currentQuestion from quiz based on query params
 $currentQuestion = $quiz->getQuestions()[$questionNr - 1];
 if ($questionNr > 1 && $isAnswerCorrect === 1) {
-    $quiz->addPoints($quiz->getQuestions()[$questionNr - 2]->getQuestionDifficulty());
+    $quiz->getQuestions()[$questionNr - 2]->setSolvedCorrectly(true);
+    //$quiz->addPoints($quiz->getQuestions()[$questionNr - 2]->getQuestionDifficulty());
     // updating quiz in session
     $apiController->updateQuizInSession($quiz);
 }

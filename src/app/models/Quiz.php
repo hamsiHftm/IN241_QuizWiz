@@ -39,6 +39,13 @@ class Quiz
 
     public function getCurrentPoints(): int
     {
+        // recalculate currentPints
+        $this->currentPoints = 0;
+        foreach ($this->questions as $question) {
+            if ($question->isSolvedCorrectly()) {
+                $this->addPoints($question->getQuestionDifficulty());
+            }
+        }
         return $this->currentPoints;
     }
 
@@ -56,11 +63,6 @@ class Quiz
     public function addQuestion($question): void
     {
         $this->questions[] = $question;
-    }
-
-    public function setCurrentPoints($currentPoints): void
-    {
-        $this->currentPoints = $currentPoints;
     }
 
     public function setPlayingMode($isPlaying): void
@@ -110,7 +112,6 @@ class Quiz
                 $quiz->addQuestion(Question::fromArray($questionData));
             }
         }
-        $quiz->setCurrentPoints($data['currentPoints']);
         $quiz->setPlayingMode($data['isPlaying']);
 
         return $quiz;

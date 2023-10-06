@@ -44,15 +44,32 @@
     background: var(--qw-pastal-green);
 }
 
+.qw-option-correct:hover {
+    border-color: var(--qw-pastal-green)!important;
+    background: var(--qw-pastal-green)!important;
+}
+
+
 .qw-option-correct-border {
     background: var(--qw-dark-pastal-green);
     border-color: var(--qw-dark-pastal-green);
     color: var(--qw-white);
 }
 
+.qw-option-correct-border:hover {
+    background: var(--qw-dark-pastal-green) !important;
+    border-color: var(--qw-dark-pastal-green) !important;
+    color: var(--qw-white) !important;
+}
+
 .qw-option-wrong {
 border-color: var(--qw-pastal-red);
 background: var(--qw-pastal-red);
+}
+
+.qw-option-wrong:hover {
+border-color: var(--qw-pastal-red) !important;
+background: var(--qw-pastal-red) !important;
 }
 
 /* Apply margin-right: 2.5% to the 1st and 3rd elements */

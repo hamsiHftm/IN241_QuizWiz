@@ -4,7 +4,6 @@ class Answer
 {
     private string $answerText;
     private string $correctAnswer;
-    private ?bool $isUserSelected;
 
     public function __construct($text, $correctAnswer)
     {
@@ -20,16 +19,6 @@ class Answer
     public function isCorrectAnswer(): string
     {
         return $this->correctAnswer;
-    }
-
-    public function isUserSelected(): ?bool
-    {
-        return $this->isUserSelected;
-    }
-
-    public function setUserSelected($isSelected): void
-    {
-        $this->isUserSelected = $isSelected;
     }
 
     public function toArray(): array
