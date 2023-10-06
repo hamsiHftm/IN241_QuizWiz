@@ -1,0 +1,16 @@
+
+
+.qw-score-card {
+    margin: 50px;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    padding: 5vh;
+    width: 70%;
+}
+
+.qw-score-board-list {
+    margin: 25px;
+}
+
+.qw-score-board-list > .row {
+    padding: 15px 0;
+}

@@ -8,6 +8,10 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// deleting Quiz Session, when available
+$apiController = new APIController();
+$apiController->deleteQuizFromSession();
+
 // initiation ApiController class
 $apiController = new APIController();
 

@@ -46,10 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $success = $dbController->saveQuizResult($quiz, $user);
     if ($success) {
 
-        // deleting quiz instance, when quiz result saved
-        if (isset($_SESSION['quiz'])) {
-            unset($_SESSION['quiz']); // This line removes the 'quiz' session variable
-        }
+        $apiController->deleteQuizFromSession();
         echo "<script>
                        console.log('Quiz Result Saved!!!');
                         window.location.href = 'HomePage.php';
@@ -58,35 +55,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<script>alert('Quiz Result cannot be saved');</script>";
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php require_once '../components/HeadComponent.php' ?>
+    <link rel="stylesheet" href="../../assets/css/ScoreBoardStyle.css">
 </head>
 <body>
 <?php require_once '../components/HeaderComponent.php'; ?>
-<div class="container-sm">
-    <div class="qw-content">
+<div class="container-sm d-flex justify-content-center align-items-center">
+    <div class="qw-score-card">
         <div>
-            <h1>Scoreboard</h1>
-            <div>
-                <span>Category: <strong><?php echo $categoryName; ?></strong></span>
+            <div class="text-center">
+                <h1>SCOREBOARD</h1>
             </div>
-            <div>
-                <span>Difficulty: <strong><?php echo $difficulty ?></strong></span>
-            </div>
-            <div>
-                <span>Total Points: <strong><?php echo $points ?></strong></span>
-            </div>
-
-            <form class="qw-form col d-flex flex-column justify-content-between" method="POST" action="ScorePage.php">
+            <hr class="m-4">
+            <div class="qw-score-board-list d-flex justify-content-center">
                 <div>
+                    <div><p>Category: &#160;<strong><?php echo $categoryName; ?></strong></p></div>
+                    <div><p>Difficulty: &#160;<strong><?php echo $difficulty; ?></strong></p></div>
+                    <div><p>Total Points: &#160;<strong><?php echo $points; ?></strong></p></div>
+                </div>
+            </div>
+            <hr class="m-4">
+            <form class="qw-form col d-flex flex-column justify-content-between" method="POST" action="ScorePage.php">
+                <div class="d-flex justify-content-evenly">
                     <button class="qw-red-button" type="submit">Save result</button>
+                    <a class="qw-red-button" href="HomePage.php">Cancel</a>
                 </div>
             </form>
-
         </div>
     </div>
 </div>

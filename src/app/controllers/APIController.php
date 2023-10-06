@@ -106,6 +106,17 @@ class APIController
     }
 
     /**
+     * Delete the Quiz object from the session if it exists.
+     */
+    public function deleteQuizFromSession(): void
+    {
+        // Check if the quiz object exists in the session
+        if (isset($_SESSION['quiz'])) {
+            unset($_SESSION['quiz']); // Remove the quiz object from the session
+        }
+    }
+
+    /**
      * Update the quiz data in the session.
      *
      * @param Quiz $quiz The Quiz object to update in the session.

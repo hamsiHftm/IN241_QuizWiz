@@ -102,14 +102,14 @@ $records = $dbController->getQuizRecordsFromUser($user->getDBId());
                 echo '<h4>Game Scores List</h4><br>';
                 echo '<table class="table"><thead><tr>';
                 echo '<th class="text-center" scope="col">ID</th>';
-                echo '<th class="text-right" scope="col">Category</th>';
+                echo '<th class="text-start" scope="col">Category</th>';
                 echo '<th class="text-center" scope="col">Difficulty</th>';
                 echo '<th class="text-center" scope="col">Total Score</th></tr></thead><tbody>';
                 $counter = 1;
                 foreach ($records as $record) {
                     echo '<tr>';
                     echo '<th class="text-center" scope="row">' . $counter . '</th>';
-                    echo '<td class="text-right">' . htmlspecialchars($record['category_name']) . '</td>';
+                    echo '<td class="text-start">' . htmlspecialchars($record['category_name']) . '</td>';
                     echo '<td class="text-center">' . htmlspecialchars($record['difficulty']) . '</td>';
                     echo '<td class="text-center">' . htmlspecialchars($record['total_score']) . '</td>';
                     echo '</tr>';

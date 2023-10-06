@@ -1,11 +1,16 @@
 <?php
 require_once '../controllers/AuthController.php';
 require_once '../controllers/DBController.php';
+require_once '../controllers/APIController.php';
 
 // Start the session if not already started
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+// deleting Quiz Session, when available
+$apiController = new APIController();
+$apiController->deleteQuizFromSession();
 
 // retrieving top 10 scored high scores
 $dbController = new DBController();
@@ -37,8 +42,8 @@ $topQuizRecords = $dbController->getTopScoredQuizRecords();
             if (!(empty($topQuizRecords))) {
                 echo '<table class="table"><thead><tr>';
                 echo '<th class="text-center" scope="col">ID</th>';
-                echo '<th class="text-right" scope="col">Username</th>';
-                echo '<th class="text-right" scope="col">Category</th>';
+                echo '<th class="text-start" scope="col">Username</th>';
+                echo '<th class="text-start" scope="col">Category</th>';
                 echo '<th class="text-center" scope="col">Difficulty</th>';
                 echo '<th class="text-center" scope="col">Total Score</th>';
                 echo '</tr></thead><tbody>';
@@ -47,8 +52,8 @@ $topQuizRecords = $dbController->getTopScoredQuizRecords();
                 foreach ($topQuizRecords as $record) {
                     echo '<tr>';
                     echo '<th class="text-center" scope="row">' . $counter . '</th>';
-                    echo '<td class="text-right">' . htmlspecialchars($record['username']) . '</td>';
-                    echo '<td class="text-right">' . htmlspecialchars($record['name']) . '</td>';
+                    echo '<td class="text-start">' . htmlspecialchars($record['username']) . '</td>';
+                    echo '<td class="text-start">' . htmlspecialchars($record['name']) . '</td>';
                     echo '<td class="text-center">' . htmlspecialchars($record['difficulty']) . '</td>';
                     echo '<td class="text-center">' . htmlspecialchars($record['total_score']) . '</td>';
                     echo '</tr>';
