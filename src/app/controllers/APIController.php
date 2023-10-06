@@ -129,18 +129,4 @@ class APIController
         // Update the quiz data in the session
         $_SESSION['quiz'] = $quizArray;
     }
-
-    /**
-     * TODO remove when its not needed
-     * Retrieve categories from the session as objects.
-     *
-     * @return array|null An array of Category objects if categories are found in the session, or null if not found.
-     */
-    public function getCategoriesFromSession(): ?array
-    {
-        if (isset($_SESSION['categories'])) {
-            $categories = $_SESSION['categories'];
-        }
-        return null;
-    }
 }

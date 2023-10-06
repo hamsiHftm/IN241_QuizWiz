@@ -6,7 +6,6 @@
 </head>
 <body>
 <!-- TODO maybe add in index with scroll -->
-<!-- toDO Commenting and formating pages files -->
 <!-- TODO navigation URL wenn somethin wrong url redirect to error page, and maybe nice name -->
 <!-- TODO Score track has fehler -->
 <div class="container-fluid landing-page-container">
