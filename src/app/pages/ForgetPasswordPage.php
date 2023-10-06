@@ -1,4 +1,34 @@
-<!-- TODO Functinality as well -->
+<?php
+require_once '../controllers/DBController.php';
+
+// Start the session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Login button action
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
+    // Retrieve user-entered values
+    $username = $_POST["username"];
+    $newPassword = $_POST["newPassword"];
+    $repeatNewPassword = $_POST["repeatNewPassword"];
+
+    // checking if newPassword and repeatPassword are equal
+    if ($newPassword == $repeatNewPassword) {
+        // changing password in DB
+        $dbController = new DBController();
+        $result = $dbController->changePasswordWithoutVerification($username, $newPassword);
+        echo "<script>alert('" . $result['message'] . "');</script>";
+
+        if ($result['success']) {
+            // redirecting to Login page
+            echo "<script>window.location.href = 'LoginPage.php'</script>";
+        }
+    } else {
+        echo "<script>alert('Password does not match');</script>";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,19 +51,19 @@
                 <div class="qw-card-layout d-flex align-items-center justify-content-center">
                     <div style="width: 90%; height: 80%">
                         <h2>Reset Password</h2>
-                        <form class="qw-form col d-flex flex-column justify-content-between">
+                        <form class="qw-form col d-flex flex-column justify-content-between" method="POST" action="ForgetPasswordPage.php">
                             <div class="form-group">
                                 <label for="usernameInput">Username / Email *</label>
-                                <input type="text" class="form-control qw-form-text-box" id="usernameInput" required>
+                                <input type="text" class="form-control qw-form-text-box" name="username" id="usernameInput" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="passwordInput">Password *</label>
-                                <input type="password" class="form-control  qw-form-text-box" id="passwordInput" required>
+                                <input type="password" class="form-control  qw-form-text-box" name="newPassword" id="passwordInput" required>
                             </div>
                             <div class="form-group">
                                 <label for="repeatPasswordInput">Repeat Password *</label>
-                                <input type="password" class="form-control  qw-form-text-box" id="repeatPasswordInput" required>
+                                <input type="password" class="form-control  qw-form-text-box" name="repeatNewPassword" id="repeatPasswordInput" required>
                             </div>
                             <div>
                                 <button class="qw-red-button" type="submit">Reset Password</button>

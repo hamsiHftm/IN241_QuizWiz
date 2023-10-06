@@ -306,6 +306,53 @@ class DBController
         }
     }
 
+    /**
+     * Change the password for a user without verification
+     *
+     * This method allows to change the password for a user by its username without verifying the current password,
+     * hashing the new password, and updating it in the database.
+     *
+     * This method is used in forgetPassword function.
+     * This remains to be extended to include authentication by email, which is not currently available.
+     *
+     * @param string $username The username of the user.
+     * @param string $newPassword The new password.
+     *
+     * @return array An associative array indicating the success or failure of the password change operation.
+     *               Example: ['success' => true, 'message' => 'Password updated successfully']
+     */
+    public function changePasswordWithoutVerification(string $username, string $newPassword): array
+    {
+        try {
+            // Connect to the database
+            $this->dbService->connect();
+
+            // Retrieve the user's current password from the database
+            $user = $this->dbService->getUserByUsername($username);
+
+            // Verify if the user exists
+            if ($user !== null) {
+                // Hash the new password for security
+                $hashedNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+                // Update the user's password in the database
+                $isPasswordUpdated = $this->dbService->updateUserPassword($username, $hashedNewPassword);
+
+                if ($isPasswordUpdated) {
+                    return ['success' => true, 'message' => 'Password updated successfully! Login now with your new password!'];
+                } else {
+                    return ['success' => false, 'message' => 'Failed to update password!'];
+                }
+            } else {
+                return ['success' => false, 'message' => 'User not exists!'];
+            }
+        } catch (PDOException $e) {
+            return ['success' => false, 'message' => 'Password change failed. Exception: ' . $e->getMessage()];
+        } finally {
+            $this->dbService->closeConnection();
+        }
+    }
+
     public function getQuizRecordsFromUser(int $userId): ?array
     {
         try {
