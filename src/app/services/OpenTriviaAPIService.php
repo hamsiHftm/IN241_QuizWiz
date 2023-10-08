@@ -89,4 +89,37 @@ class OpenTriviaAPIService
             return [];
         }
     }
+
+    /**
+     * Retrieve number of questions available for categoryId in each difficulty
+     *
+     * @param int $categoryId
+     * @return array|null Returns information returned from the route
+     */
+    public function getCategoryQuestionCount(int $categoryId): ?array
+    {
+        try {
+            $url = $this->baseURL . '/api_count.php';
+            $params = array(
+                'category' => $categoryId
+            );
+
+            // Build the query string
+            $queryString = http_build_query($params);
+            // Append the query string to the URL
+            $urlWithParams = $url . '?' . $queryString;
+
+            // Make a GET request to the API endpoint and retrieve the response
+            $response = file_get_contents($urlWithParams);
+            // Process the response (e.g., JSON decoding, error handling, etc.)
+            $data = json_decode($response, true);
+
+            if ($data && isset($data['category_question_count'])) {
+                return $data['category_question_count'];
+            }
+            return [];
+        } catch (Exception $e) {
+            return [];
+        }
+    }
 }

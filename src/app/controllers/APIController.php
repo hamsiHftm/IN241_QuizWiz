@@ -47,6 +47,45 @@ class APIController
     }
 
     /**
+     * Retrieves categories along with their details.
+     *
+     * @return array An array containing category details, including ID, name, and question counts.
+     *               The array is indexed by category index (starting from 1).
+     *               Each category detail is an associative array with the following keys:
+     *               - 'id': The unique identifier of the category.
+     *               - 'name': The name of the category.
+     *               - 'total_question_count': The total number of questions in the category.
+     *               - 'total_easy_question_count': The total number of easy questions in the category.
+     *               - 'total_medium_question_count': The total number of medium questions in the category.
+     *               - 'total_hard_question_count': The total number of hard questions in the category.
+     * @throws Exception If an error occurs while retrieving category data from the API.
+     */
+    public function getCategoriesWithDetails(): array {
+        try {
+            // retrieving categories from API
+            $categories = $this->apiService->getCategories();
+
+            // retrieving number of question for each category from API
+            $results = [];
+            $count = 1;
+            foreach ($categories as $category) {
+                $data = [];
+                $details = $this->apiService->getCategoryQuestionCount($category['id']);
+                $data['id'] = $category['id'];
+                $data['name'] = $category['name'];
+                $data['total_question_count'] = $details['total_question_count'];
+                $data['total_easy_question_count'] = $details['total_easy_question_count'];
+                $data['total_medium_question_count'] = $details['total_medium_question_count'];
+                $data['total_hard_question_count'] = $details['total_hard_question_count'];
+                $results[] = $data;
+            }
+            return $results;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+
+    /**
      * Generate a quiz and its questions from API results and store it in the session.
      *
      * @param int $categoryId The ID of the category for the quiz.

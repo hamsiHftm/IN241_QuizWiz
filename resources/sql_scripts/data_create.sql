@@ -1,12 +1,12 @@
 -- Example data for the Player table (without session_token and hashed_password)
 -- The password can be set with the Forgot password function without any verification with the username
-INSERT INTO Player (username, first_name, last_name, date_of_birth)
+INSERT INTO Player (username, password, first_name, last_name, date_of_birth)
 VALUES
-    ('john_15', 'John', 'Doe', '1990-05-15'),
-    ('alice_10', 'Alice', 'Smith', '1985-12-10'),
-    ('bob_25', 'Bob', 'Johnson', '1995-07-25'),
-    ('eve_03', 'Eve', 'Wilson', '1980-03-03'),
-    ('grace_20', 'Grace', 'Brown', '2000-09-20');
+    ('john_15', '12345', 'John', 'Doe', '1990-05-15'),
+    ('alice_10', '12345', 'Alice', 'Smith', '1985-12-10'),
+    ('bob_25', '12345', 'Bob', 'Johnson', '1995-07-25'),
+    ('eve_03', '12345', 'Eve', 'Wilson', '1980-03-03'),
+    ('grace_20', '12345',  'Grace', 'Brown', '2000-09-20');
 
 -- Example data for the Category table
 INSERT INTO Category (identifier, name)

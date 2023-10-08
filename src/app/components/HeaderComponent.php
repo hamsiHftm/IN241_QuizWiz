@@ -32,6 +32,8 @@ if ($quiz) {
                     if ($user) {
                         echo '<li class="nav-item active">
                     <a class="header-link" href="../pages/QuizStartPage.php">Quiz</a>
+                </li><li class="nav-item active">
+                    <a class="header-link" href="../pages/CategoryPage.php">Categories</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="header-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">' .
