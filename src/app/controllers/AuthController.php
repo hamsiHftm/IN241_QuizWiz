@@ -12,15 +12,15 @@ class AuthController
      *
      * @param string $username The username of the new user.
      * @param string $password The password of the new user.
-     * @param string $firstname The first name of the new user (or null if empty).
-     * @param string $lastname The last name of the new user (or null if empty).
-     * @param string $dateOfBirth The date of birth of the new user (or null if empty).
+     * @param string|null $firstname The first name of the new user (or null if empty).
+     * @param string|null $lastname The last name of the new user (or null if empty).
+     * @param string|null $dateOfBirth The date of birth of the new user (or null if empty).
      *
      * @return array An associative array containing the result of the registration attempt.
      *               It includes 'success' (boolean) indicating whether the registration was successful
      *               and 'message' (string) providing a message describing the outcome.
      */
-    public static function registerUser(string $username, string $password, string $firstname, string $lastname, string $dateOfBirth): array
+    public static function registerUser(string $username, string $password, ?string $firstname, ?string $lastname, ?string $dateOfBirth): array
     {
         // checking if firstname, lastname and dataOfBirth are empty string, when yes changing to null
         $firstname = (empty($firstname)) ? null : $firstname;

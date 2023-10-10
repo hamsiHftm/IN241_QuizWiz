@@ -22,9 +22,9 @@ class DBController
      *
      * @param string $username The username of the new user.
      * @param string $password The password of the new user.
-     * @param string $firstname The first name of the new user.
-     * @param string $lastname The last name of the new user.
-     * @param string $dateOfBirth The date of birth of the new user.
+     * @param string|null $firstname The first name of the new user.
+     * @param string|null $lastname The last name of the new user.
+     * @param string|null $dateOfBirth The date of birth of the new user.
      *
      * @return array An associative array containing the result of the registration attempt.
      *               - 'success': A boolean indicating whether the registration was successful.
@@ -33,7 +33,7 @@ class DBController
      *                 If a user with the same username already exists, the message will indicate a failure due to an existing user.
      *                 If there is a database error, it will include details of the exception in the message.
      */
-    public function registerNewUser(string $username, string $password, string $firstname, string $lastname, string $dateOfBirth): array
+    public function registerNewUser(string $username, string $password, ?string $firstname, ?string $lastname, ?string $dateOfBirth): array
     {
         try {
             // connecting to DB
