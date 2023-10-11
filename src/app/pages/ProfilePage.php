@@ -101,7 +101,7 @@ $records = $dbController->getQuizRecordsFromUser($user->getDBId());
                 echo '<div class="qw-profile-card">';
                 echo '<h4>Game Scores List</h4><br>';
                 echo '<table class="table"><thead><tr>';
-                echo '<th class="text-center" scope="col">ID</th>';
+                echo '<th class="text-center" scope="col">Rank</th>';
                 echo '<th class="text-start" scope="col">Category</th>';
                 echo '<th class="text-center" scope="col">Difficulty</th>';
                 echo '<th class="text-center" scope="col">Total Score</th></tr></thead><tbody>';
