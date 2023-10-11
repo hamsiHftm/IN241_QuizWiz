@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["username"])) {
                             </div>
 
                             <div class="form-group">
-                                <label for="passwordInput">Password *</label>
+                                <label for="passwordInput">New Password *</label>
                                 <input type="password" class="form-control  qw-form-text-box" name="newPassword" id="passwordInput" required>
                             </div>
                             <div class="form-group">

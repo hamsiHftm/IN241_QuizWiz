@@ -37,9 +37,9 @@ $topQuizRecords = $dbController->getTopScoredQuizRecords();
         }
         ?>
         <div>
-            <p>Below is a list of the top <strong>10</strong> players based on their scores:</p>
             <?php
             if (!(empty($topQuizRecords))) {
+                echo '<p>Below is a list of the top <strong>10</strong> players based on their scores:</p>';
                 echo '<table class="table"><thead><tr>';
                 echo '<th class="text-center" scope="col">ID</th>';
                 echo '<th class="text-start" scope="col">Username</th>';

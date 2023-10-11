@@ -54,7 +54,7 @@ $records = $dbController->getQuizRecordsFromUser($user->getDBId());
                                    value="<?php echo $user->getLastname() ?>">
                         </div>
                         <div class="form-group">
-                            <label for="dateOfBirthInput">Password</label>
+                            <label for="dateOfBirthInput">Date of Birth</label>
                             <input type="date" class="form-control  qw-form-text-box" name="dateOfBirth"
                                    id="dateOfBirthInput" <?php if (!is_null($dateOfBirth)) echo 'value="' . date('Y-m-d', strtotime($dateOfBirth)) . '"'; ?>>
                         </div>
