@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php require_once '../components/HeaderComponent.php'; ?>
 <div class="container-sm">
     <div class="qw-content">
-        <h1 class="text-center">Create Quiz</h1>
+        <h1 class="text-center">Take Quiz</h1>
         <hr class="my-4">
         <div class="text-center alert alert-secondary" style="font-size:small">
             <p>
